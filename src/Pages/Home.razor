@@ -1,0 +1,139 @@
+@page "/"
+@inject ArmorDataService Data
+
+<PageTitle>HD2 Armorer</PageTitle>
+
+@if (!Data.IsLoaded)
+{
+    <div class="loading-state">
+        <div class="loading-text">Loading Armory...</div>
+    </div>
+}
+else
+{
+    <div class="filter-bar">
+        <div class="filter-controls">
+            <select class="filter-select" @bind="selectedPassive" @bind:after="AddPassive">
+                <option value="">Passive ability...</option>
+                @foreach (var p in Data.Passives.OrderBy(p => p.DisplayName))
+                {
+                    if (!activePassives.Contains(p.DisplayName))
+                    {
+                        <option value="@p.DisplayName">@p.DisplayName</option>
+                    }
+                }
+            </select>
+
+            <select class="filter-select" @bind="selectedFeature" @bind:after="AddFeature">
+                <option value="">Feature tag...</option>
+                @foreach (var tag in Data.AllFeatureTags)
+                {
+                    if (!activeFeatureTags.Contains(tag))
+                    {
+                        <option value="@tag">@FormatTag(tag)</option>
+                    }
+                }
+            </select>
+        </div>
+
+        @if (activePassives.Count > 0 || activeFeatureTags.Count > 0)
+        {
+            <div class="active-filters">
+                @foreach (var passive in activePassives)
+                {
+                    <span class="filter-pill passive-pill">
+                        @if (Data.PassiveIconMap.TryGetValue(passive, out var icon))
+                        {
+                            <img src="images/armorpassives/@icon" class="pill-icon" alt="" />
+                        }
+                        @passive
+                        <button class="pill-remove" @onclick="() => RemovePassive(passive)" aria-label="Remove">×</button>
+                    </span>
+                }
+                @foreach (var tag in activeFeatureTags)
+                {
+                    <span class="filter-pill feature-pill">
+                        @FormatTag(tag)
+                        <button class="pill-remove" @onclick="() => RemoveFeatureTag(tag)" aria-label="Remove">×</button>
+                    </span>
+                }
+                <button class="clear-all" @onclick="ClearAll">Clear all</button>
+            </div>
+        }
+    </div>
+
+    var filtered = Data.Filter(activePassives, activeFeatureTags);
+
+    @foreach (var weightClass in new[] { "Light", "Medium", "Heavy" })
+    {
+        var group = filtered.Where(a => a.WeightClass == weightClass).OrderBy(a => a.SortOrder).ToList();
+        if (group.Count > 0)
+        {
+            <section class="weight-section">
+                <h2 class="weight-heading @weightClass.ToLower()">@weightClass</h2>
+                <div class="armor-grid">
+                    @foreach (var armor in group)
+                    {
+                        <div class="armor-tile">
+                            <div class="armor-img-wrap">
+                                <img class="armor-img" src="images/armor/@armor.ImageURL" alt="@armor.DisplayName" loading="lazy" />
+                            </div>
+                            <div class="armor-info">
+                                <div class="armor-name">@armor.DisplayName</div>
+                                <div class="armor-passive">
+                                    @if (Data.PassiveIconMap.TryGetValue(armor.Passive, out var pIcon))
+                                    {
+                                        <img src="images/armorpassives/@pIcon" class="passive-icon" alt="" />
+                                    }
+                                    <span class="passive-name">@armor.Passive</span>
+                                </div>
+                                @if (Data.FeatureTags.TryGetValue(armor.Passive, out var tags))
+                                {
+                                    <div class="feature-tags">
+                                        @foreach (var tag in tags)
+                                        {
+                                            <span class="feature-tag">@FormatTag(tag)</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+    }
+
+    if (filtered.Count == 0)
+    {
+        <div class="no-results">No armor matches the selected filters.</div>
+    }
+}
+
+@code {
+    private HashSet<string> activePassives = [];
+    private HashSet<string> activeFeatureTags = [];
+    private string selectedPassive = "";
+    private string selectedFeature = "";
+
+    protected override async Task OnInitializedAsync() => await Data.LoadAsync();
+
+    private void AddPassive()
+    {
+        if (!string.IsNullOrEmpty(selectedPassive)) activePassives.Add(selectedPassive);
+        selectedPassive = "";
+    }
+
+    private void AddFeature()
+    {
+        if (!string.IsNullOrEmpty(selectedFeature)) activeFeatureTags.Add(selectedFeature);
+        selectedFeature = "";
+    }
+
+    private void RemovePassive(string p) => activePassives.Remove(p);
+    private void RemoveFeatureTag(string t) => activeFeatureTags.Remove(t);
+    private void ClearAll() { activePassives.Clear(); activeFeatureTags.Clear(); }
+
+    private static string FormatTag(string tag) =>
+        string.Join(" ", tag.Split('-').Select(w => char.ToUpper(w[0]) + w[1..]));
+}

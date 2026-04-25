@@ -1,0 +1,19 @@
+@inherits LayoutComponentBase
+
+<div class="app-layout">
+    <header class="app-header">
+        <div class="header-content">
+            <a class="brand" href="/">
+                <span class="brand-eagle">⬡</span>
+                HD2 Armorer
+            </a>
+            <nav class="header-nav">
+                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">Armor</NavLink>
+                <NavLink class="nav-link" href="/about">About</NavLink>
+            </nav>
+        </div>
+    </header>
+    <main class="app-main">
+        @Body
+    </main>
+</div>

@@ -1,0 +1,158 @@
+stages:
+  - version
+  - build
+  - e2e
+  - pages
+  - docker
+
+variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "1"
+  NUGET_XMLDOC_MODE: "skip"
+  IMAGE_NAME: $CI_REGISTRY_IMAGE
+  NUGET_PACKAGES: "$CI_PROJECT_DIR/.nuget/packages"
+  # GitVersion needs full history to compute semantic version
+  GIT_DEPTH: "0"
+  # Playwright browsers pre-installed in the playwright/dotnet image at /ms-playwright
+  PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+  # GitHub Pages sub-path — must match GitHub repo name
+  PAGES_BASE_HREF: /Helldivers2Armorer/
+
+# ── Shared Playwright job template ────────────────────────────────────────
+.playwright:
+  image:
+    name: mcr.microsoft.com/playwright/dotnet:v1.58.0-noble
+    pull_policy: if-not-present
+  cache:
+    key: e2e-$CI_COMMIT_SHA
+    paths:
+      - e2e-publish/
+    policy: pull
+
+# ── Calculate semantic version ────────────────────────────────────────────
+version:
+  stage: version
+  interruptible: true
+  image:
+    name: mcr.microsoft.com/dotnet/sdk:10.0
+    pull_policy: if-not-present
+  script:
+    - dotnet tool restore
+    - SEMVER=$(dotnet gitversion /showvariable SemVer)
+    - echo "Calculated version ${SEMVER}"
+    - echo "GITVERSION_SEMVER=${SEMVER}" > version.env
+  artifacts:
+    reports:
+      dotenv: version.env
+
+# ── Build & publish ───────────────────────────────────────────────────────
+build:
+  stage: build
+  interruptible: true
+  image:
+    name: mcr.microsoft.com/dotnet/sdk:10.0
+    pull_policy: if-not-present
+  needs:
+    - job: version
+      artifacts: true
+  script:
+    - dotnet restore Helldivers2Armorer.slnx
+    - dotnet tool restore
+    - dotnet gitversion /updateprojectfiles
+    - echo "Building version ${GITVERSION_SEMVER}"
+    - dotnet build Helldivers2Armorer.slnx --configuration Release --no-restore
+    # Publish WASM app once (base href="/") — used for Docker and as E2E test target
+    - dotnet publish src/Helldivers2Armorer.csproj --configuration Release --no-restore --no-build --output publish/
+    # Copy output for GitHub Pages and fix base href to match the sub-path
+    - cp -r publish/ pages-publish/
+    - |
+      sed -i "s|<base href=\"/\" />|<base href=\"${PAGES_BASE_HREF}\" />|" \
+        pages-publish/wwwroot/index.html
+    # E2E self-contained linux-x64 publish (bundles runtime — no dotnet in playwright image)
+    - dotnet publish e2e/Helldivers2Armorer.E2E.csproj --configuration Release -r linux-x64 --self-contained --output e2e-publish/
+    # Copy wwwroot alongside the E2E binary so AppFixture can locate static files
+    - cp -r publish/wwwroot e2e-publish/wwwroot
+  cache:
+    - key: nuget-$CI_COMMIT_REF_SLUG
+      paths:
+        - .nuget/packages/
+    - key: e2e-$CI_COMMIT_SHA
+      paths:
+        - e2e-publish/
+      policy: push
+  artifacts:
+    name: "helldivers2armorer-$GITVERSION_SEMVER"
+    paths:
+      - publish/
+      - pages-publish/
+    expire_in: 30 days
+
+# ── E2E browser tests (pre-deploy, static file host) ─────────────────────
+e2e:
+  extends: .playwright
+  stage: e2e
+  interruptible: true
+  script:
+    - chmod +x e2e-publish/Helldivers2Armorer.E2E
+    - ./e2e-publish/Helldivers2Armorer.E2E
+  needs:
+    - job: build
+      artifacts: false
+
+# ── Deploy static output to gh-pages branch ──────────────────────────────
+# GitLab server-side mirroring pushes gh-pages → GitHub, which GitHub Pages serves.
+# Note: if the GitLab mirror is configured to mirror only named branches, ensure
+# gh-pages is included (Settings → Repository → Mirroring).
+pages:
+  stage: pages
+  interruptible: false
+  image:
+    name: alpine/git:latest
+    pull_policy: if-not-present
+  needs:
+    - job: e2e
+      artifacts: false
+    - job: build
+      artifacts: true
+    - job: version
+      artifacts: true
+  script:
+    - git config user.email "ci@gitlab.lan"
+    - git config user.name "GitLab CI"
+    - cd pages-publish/wwwroot
+    - git init
+    - git checkout -b gh-pages
+    - git add .
+    - git commit -m "Deploy v${GITVERSION_SEMVER} [skip ci]"
+    - git remote add origin "https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+    - git push --force origin gh-pages
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+
+# ── Docker image for homelab ──────────────────────────────────────────────
+docker:
+  stage: docker
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  needs:
+    - job: e2e
+      artifacts: false
+    - job: build
+      artifacts: true
+    - job: version
+      artifacts: true
+  script:
+    - docker build -f Dockerfile -t $IMAGE_NAME:$CI_COMMIT_SHA publish/wwwroot
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHA
+    - docker tag $IMAGE_NAME:$CI_COMMIT_SHA $IMAGE_NAME:$GITVERSION_SEMVER
+    - docker push $IMAGE_NAME:$GITVERSION_SEMVER
+    - docker tag $IMAGE_NAME:$CI_COMMIT_SHA $IMAGE_NAME:latest
+    - docker push $IMAGE_NAME:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"

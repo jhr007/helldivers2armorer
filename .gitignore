@@ -21,6 +21,12 @@ e2e-publish/
 .DS_Store
 Thumbs.db
 
+# Claude Code local config
+.claude/
+
+# Temp working files
+temp/
+
 # Env / secrets
 .env
 *.env.local

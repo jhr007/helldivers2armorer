@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/e2e/">
+    <Project Path="e2e/Helldivers2Armorer.E2E.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Helldivers2Armorer.csproj" />
+  </Folder>
+</Solution>
