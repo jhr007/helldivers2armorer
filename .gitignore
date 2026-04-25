@@ -1,0 +1,28 @@
+# Build output
+bin/
+obj/
+publish/
+e2e-publish/
+
+# .NET
+*.user
+*.suo
+.vs/
+.vscode/
+
+# NuGet
+.nuget/
+*.nupkg
+
+# Rider
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+*.env.local
+appsettings.Local.json
+appsettings.*.local.json
