@@ -15,7 +15,7 @@
     "imageURL": "af50noxiousranger.webp",
     "tier": "b",
     "index": 0,
-    "sortOrder": 10
+    "sortOrder": 130
   },
   {
     "displayName": "AC-2 Obedient",
@@ -33,7 +33,7 @@
     "imageURL": "ac2obedient.webp",
     "tier": "b",
     "index": 1,
-    "sortOrder": 20
+    "sortOrder": 210
   },
   {
     "displayName": "SR-24 Street Scout",
@@ -51,7 +51,7 @@
     "imageURL": "sr24streetscout.webp",
     "tier": "b",
     "index": 2,
-    "sortOrder": 30
+    "sortOrder": 150
   },
   {
     "displayName": "SR-18 Road Block",
@@ -69,7 +69,7 @@
     "imageURL": "sr18roadblock.webp",
     "tier": "b",
     "index": 3,
-    "sortOrder": 40
+    "sortOrder": 9000
   },
   {
     "displayName": "B-08 Light Gunner",
@@ -87,7 +87,7 @@
     "imageURL": "b08lightgunner.webp",
     "tier": "b",
     "index": 4,
-    "sortOrder": 50
+    "sortOrder": 90
   },
   {
     "displayName": "CE-07 Demolition Specialist",
@@ -105,7 +105,7 @@
     "imageURL": "ce07demolitionspecialist.webp",
     "tier": "b",
     "index": 5,
-    "sortOrder": 60
+    "sortOrder": 50
   },
   {
     "displayName": "CE-67 Titan",
@@ -123,7 +123,7 @@
     "imageURL": "ce67titan.webp",
     "tier": "b",
     "index": 6,
-    "sortOrder": 70
+    "sortOrder": 9000
   },
   {
     "displayName": "CE-74 Breaker",
@@ -141,7 +141,7 @@
     "imageURL": "ce74breaker.webp",
     "tier": "b",
     "index": 7,
-    "sortOrder": 80
+    "sortOrder": 30
   },
   {
     "displayName": "CM-21 Trench Paramedic",
@@ -159,7 +159,7 @@
     "imageURL": "cm21trenchparamedic.webp",
     "tier": "b",
     "index": 8,
-    "sortOrder": 90
+    "sortOrder": 40
   },
   {
     "displayName": "CW-4 Arctic Ranger",
@@ -177,7 +177,7 @@
     "imageURL": "cw4arcticranger.webp",
     "tier": "b",
     "index": 9,
-    "sortOrder": 100
+    "sortOrder": 20
   },
   {
     "displayName": "EX-00 Prototype X",
@@ -195,7 +195,7 @@
     "imageURL": "ex00prototypex.webp",
     "tier": "b",
     "index": 10,
-    "sortOrder": 110
+    "sortOrder": 70
   },
   {
     "displayName": "FS-37 Ravager",
@@ -213,7 +213,7 @@
     "imageURL": "fs37ravager.webp",
     "tier": "b",
     "index": 11,
-    "sortOrder": 120
+    "sortOrder": 10
   },
   {
     "displayName": "FS-38 Eradicator",
@@ -231,7 +231,7 @@
     "imageURL": "fs38eradicator.webp",
     "tier": "b",
     "index": 12,
-    "sortOrder": 130
+    "sortOrder": 60
   },
   {
     "displayName": "I-09 Heatseeker",
@@ -249,7 +249,7 @@
     "imageURL": "i09heatseeker.webp",
     "tier": "b",
     "index": 13,
-    "sortOrder": 140
+    "sortOrder": 200
   },
   {
     "displayName": "PH-9 Predator",
@@ -267,7 +267,7 @@
     "imageURL": "ph9predator.webp",
     "tier": "b",
     "index": 14,
-    "sortOrder": 150
+    "sortOrder": 190
   },
   {
     "displayName": "SC-30 Trailblazer Scout",
@@ -285,7 +285,7 @@
     "imageURL": "sc30trailblazerscout.webp",
     "tier": "b",
     "index": 15,
-    "sortOrder": 160
+    "sortOrder": 100
   },
   {
     "displayName": "SC-34 Infiltrator",
@@ -303,7 +303,7 @@
     "imageURL": "sc34infiltrator.webp",
     "tier": "b",
     "index": 16,
-    "sortOrder": 170
+    "sortOrder": 110
   },
   {
     "displayName": "SC-37 Legionnaire",
@@ -321,7 +321,7 @@
     "imageURL": "sc37legionnaire.webp",
     "tier": "b",
     "index": 17,
-    "sortOrder": 180
+    "sortOrder": 80
   },
   {
     "displayName": "UF-16 Inspector",
@@ -339,7 +339,7 @@
     "imageURL": "uf16inspector.webp",
     "tier": "b",
     "index": 18,
-    "sortOrder": 190
+    "sortOrder": 140
   },
   {
     "displayName": "AF-02 Haz-Master",
@@ -357,7 +357,7 @@
     "imageURL": "af02hazmaster.webp",
     "tier": "b",
     "index": 19,
-    "sortOrder": 200
+    "sortOrder": 250
   },
   {
     "displayName": "AF-91 Field Chemist",
@@ -375,7 +375,7 @@
     "imageURL": "af91fieldchemist.webp",
     "tier": "b",
     "index": 20,
-    "sortOrder": 210
+    "sortOrder": 9000
   },
   {
     "displayName": "B-01 Tactical",
@@ -393,7 +393,7 @@
     "imageURL": "b01tactical.webp",
     "tier": "b",
     "index": 21,
-    "sortOrder": 220
+    "sortOrder": 190
   },
   {
     "displayName": "B-24 Enforcer",
@@ -411,7 +411,7 @@
     "imageURL": "b24enforcer.webp",
     "tier": "b",
     "index": 22,
-    "sortOrder": 230
+    "sortOrder": 180
   },
   {
     "displayName": "CE-27 Ground Breaker",
@@ -429,7 +429,7 @@
     "imageURL": "ce27groundbreaker.webp",
     "tier": "b",
     "index": 23,
-    "sortOrder": 240
+    "sortOrder": 50
   },
   {
     "displayName": "CE-35 Trench Engineer",
@@ -447,7 +447,7 @@
     "imageURL": "ce35trenchengineer.webp",
     "tier": "b",
     "index": 24,
-    "sortOrder": 250
+    "sortOrder": 40
   },
   {
     "displayName": "CE-81 Juggernaut",
@@ -465,7 +465,7 @@
     "imageURL": "ce81juggernaut.webp",
     "tier": "b",
     "index": 25,
-    "sortOrder": 260
+    "sortOrder": 9010
   },
   {
     "displayName": "CM-09 Bonesnapper",
@@ -483,7 +483,7 @@
     "imageURL": "cm09bonesnapper.webp",
     "tier": "b",
     "index": 26,
-    "sortOrder": 270
+    "sortOrder": 60
   },
   {
     "displayName": "CM-10 Clinician",
@@ -501,7 +501,7 @@
     "imageURL": "cm10clinician.webp",
     "tier": "b",
     "index": 27,
-    "sortOrder": 280
+    "sortOrder": 70
   },
   {
     "displayName": "CM-14 Physician",
@@ -519,7 +519,7 @@
     "imageURL": "cm14physician.webp",
     "tier": "b",
     "index": 28,
-    "sortOrder": 290
+    "sortOrder": 130
   },
   {
     "displayName": "CW-9 White Wolf",
@@ -537,7 +537,7 @@
     "imageURL": "cw9whitewolf.webp",
     "tier": "b",
     "index": 29,
-    "sortOrder": 300
+    "sortOrder": 210
   },
   {
     "displayName": "DP-00 Tactical",
@@ -555,7 +555,7 @@
     "imageURL": "dp00tactical.webp",
     "tier": "b",
     "index": 30,
-    "sortOrder": 310
+    "sortOrder": 30
   },
   {
     "displayName": "DP-11 Champion of the People",
@@ -573,7 +573,7 @@
     "imageURL": "dp11championofthepeople.webp",
     "tier": "b",
     "index": 31,
-    "sortOrder": 320
+    "sortOrder": 120
   },
   {
     "displayName": "AC-1 Dutiful",
@@ -591,7 +591,7 @@
     "imageURL": "ac1dutiful.webp",
     "tier": "b",
     "index": 32,
-    "sortOrder": 330
+    "sortOrder": 9020
   },
   {
     "displayName": "DP-40 Hero of the Federation",
@@ -609,7 +609,7 @@
     "imageURL": "dp40heroofthefederation.webp",
     "tier": "b",
     "index": 33,
-    "sortOrder": 340
+    "sortOrder": 110
   },
   {
     "displayName": "DP-53 Savior of the Free",
@@ -627,7 +627,7 @@
     "imageURL": "dp53saviorofthefree.webp",
     "tier": "b",
     "index": 34,
-    "sortOrder": 350
+    "sortOrder": 170
   },
   {
     "displayName": "EX-03 Prototype 3",
@@ -645,7 +645,7 @@
     "imageURL": "ex03prototype3.webp",
     "tier": "b",
     "index": 35,
-    "sortOrder": 360
+    "sortOrder": 90
   },
   {
     "displayName": "EX-16 Prototype 16",
@@ -663,7 +663,7 @@
     "imageURL": "ex16prototype16.webp",
     "tier": "b",
     "index": 36,
-    "sortOrder": 370
+    "sortOrder": 100
   },
   {
     "displayName": "FS-34 Exterminator",
@@ -681,7 +681,7 @@
     "imageURL": "fs34exterminator.webp",
     "tier": "b",
     "index": 37,
-    "sortOrder": 380
+    "sortOrder": 9030
   },
   {
     "displayName": "I-92 Fire Fighter",
@@ -699,7 +699,7 @@
     "imageURL": "i92firefighter.webp",
     "tier": "b",
     "index": 38,
-    "sortOrder": 390
+    "sortOrder": 230
   },
   {
     "displayName": "I-102 Draconaught",
@@ -717,7 +717,7 @@
     "imageURL": "i102draconaught.webp",
     "tier": "b",
     "index": 39,
-    "sortOrder": 400
+    "sortOrder": 350
   },
   {
     "displayName": "PH-56 Jaguar",
@@ -735,7 +735,7 @@
     "imageURL": "ph56jaguar.webp",
     "tier": "b",
     "index": 40,
-    "sortOrder": 410
+    "sortOrder": 220
   },
   {
     "displayName": "SA-04 Combat Technician",
@@ -753,7 +753,7 @@
     "imageURL": "sa04combattechnician.webp",
     "tier": "b",
     "index": 41,
-    "sortOrder": 420
+    "sortOrder": 240
   },
   {
     "displayName": "SA-12 Servo Assisted",
@@ -771,7 +771,7 @@
     "imageURL": "sa12servoassisted.webp",
     "tier": "b",
     "index": 42,
-    "sortOrder": 430
+    "sortOrder": 20
   },
   {
     "displayName": "SA-25 Steel Trooper",
@@ -789,7 +789,7 @@
     "imageURL": "sa25steeltrooper.webp",
     "tier": "b",
     "index": 43,
-    "sortOrder": 440
+    "sortOrder": 10
   },
   {
     "displayName": "SA-15 Drone Master",
@@ -807,7 +807,7 @@
     "imageURL": "sc15dronemaster.webp",
     "tier": "b",
     "index": 44,
-    "sortOrder": 450
+    "sortOrder": 9040
   },
   {
     "displayName": "TR-7 Ambassador of the Brand",
@@ -825,7 +825,7 @@
     "imageURL": "tr7ambassadorofthebrand.webp",
     "tier": "b",
     "index": 45,
-    "sortOrder": 460
+    "sortOrder": 9050
   },
   {
     "displayName": "TR-9 Cavalier of Democracy",
@@ -843,7 +843,7 @@
     "imageURL": "tr9cavalierofdemocracy.webp",
     "tier": "b",
     "index": 46,
-    "sortOrder": 470
+    "sortOrder": 9060
   },
   {
     "displayName": "TR-40 Gold Eagle",
@@ -861,7 +861,7 @@
     "imageURL": "tr40goldeagle.webp",
     "tier": "b",
     "index": 47,
-    "sortOrder": 480
+    "sortOrder": 200
   },
   {
     "displayName": "TR-117 Alpha Commander",
@@ -879,7 +879,7 @@
     "imageURL": "tr117alphacommander.webp",
     "tier": "b",
     "index": 48,
-    "sortOrder": 490
+    "sortOrder": 140
   },
   {
     "displayName": "UF-50 Bloodhound",
@@ -897,7 +897,7 @@
     "imageURL": "uf50bloodhound.webp",
     "tier": "b",
     "index": 49,
-    "sortOrder": 500
+    "sortOrder": 260
   },
   {
     "displayName": "UF-84 Doubt Killer",
@@ -915,7 +915,7 @@
     "imageURL": "uf84doubtkiller.webp",
     "tier": "b",
     "index": 50,
-    "sortOrder": 510
+    "sortOrder": 9070
   },
   {
     "displayName": "AF-52 Lockdown",
@@ -933,7 +933,7 @@
     "imageURL": "af52lockdown.webp",
     "tier": "b",
     "index": 51,
-    "sortOrder": 520
+    "sortOrder": 9010
   },
   {
     "displayName": "B-27 Fortified Commando",
@@ -951,7 +951,7 @@
     "imageURL": "b27fortifiedcommando.webp",
     "tier": "b",
     "index": 52,
-    "sortOrder": 530
+    "sortOrder": 9020
   },
   {
     "displayName": "CE-64 Grenadier",
@@ -969,7 +969,7 @@
     "imageURL": "ce64grenadier.webp",
     "tier": "b",
     "index": 53,
-    "sortOrder": 540
+    "sortOrder": 9030
   },
   {
     "displayName": "CE-101 Guerilla Gorilla",
@@ -987,7 +987,7 @@
     "imageURL": "ce101guerillagorilla.webp",
     "tier": "b",
     "index": 54,
-    "sortOrder": 550
+    "sortOrder": 9040
   },
   {
     "displayName": "CM-17 Butcher",
@@ -1005,7 +1005,7 @@
     "imageURL": "cm17butcher.webp",
     "tier": "b",
     "index": 55,
-    "sortOrder": 560
+    "sortOrder": 9050
   },
   {
     "displayName": "CW-22 Kodiak",
@@ -1023,7 +1023,7 @@
     "imageURL": "cw22kodiak.webp",
     "tier": "b",
     "index": 56,
-    "sortOrder": 570
+    "sortOrder": 9060
   },
   {
     "displayName": "CW-36 Winter Warrior",
@@ -1041,7 +1041,7 @@
     "imageURL": "cw36winterwarrior.webp",
     "tier": "b",
     "index": 57,
-    "sortOrder": 580
+    "sortOrder": 9070
   },
   {
     "displayName": "FS-05 Marksman",
@@ -1059,7 +1059,7 @@
     "imageURL": "fs05marksman.webp",
     "tier": "b",
     "index": 58,
-    "sortOrder": 590
+    "sortOrder": 9080
   },
   {
     "displayName": "FS-11 Executioner",
@@ -1077,7 +1077,7 @@
     "imageURL": "fs11executioner.webp",
     "tier": "b",
     "index": 59,
-    "sortOrder": 600
+    "sortOrder": 9090
   },
   {
     "displayName": "FS-23 Battle Master",
@@ -1095,7 +1095,7 @@
     "imageURL": "fs23battlemaster.webp",
     "tier": "b",
     "index": 60,
-    "sortOrder": 610
+    "sortOrder": 9100
   },
   {
     "displayName": "FS-55 Devastator",
@@ -1113,7 +1113,7 @@
     "imageURL": "fs55devastator.webp",
     "tier": "b",
     "index": 61,
-    "sortOrder": 620
+    "sortOrder": 9110
   },
   {
     "displayName": "FS-61 Dreadnought",
@@ -1131,7 +1131,7 @@
     "imageURL": "fs61dreadnought.webp",
     "tier": "b",
     "index": 62,
-    "sortOrder": 630
+    "sortOrder": 9120
   },
   {
     "displayName": "I-44 Salamander",
@@ -1149,7 +1149,7 @@
     "imageURL": "i44salamander.webp",
     "tier": "b",
     "index": 63,
-    "sortOrder": 640
+    "sortOrder": 9130
   },
   {
     "displayName": "PH-202 Twigsnapper",
@@ -1167,7 +1167,7 @@
     "imageURL": "ph202twigsnapper.webp",
     "tier": "b",
     "index": 64,
-    "sortOrder": 650
+    "sortOrder": 9140
   },
   {
     "displayName": "SA-32 Dynamo",
@@ -1185,7 +1185,7 @@
     "imageURL": "sa32dynamo.webp",
     "tier": "b",
     "index": 65,
-    "sortOrder": 660
+    "sortOrder": 9150
   },
   {
     "displayName": "TR-62 Knight",
@@ -1203,7 +1203,7 @@
     "imageURL": "tr62knight.webp",
     "tier": "b",
     "index": 66,
-    "sortOrder": 670
+    "sortOrder": 9160
   },
   {
     "displayName": "SR-64 Cinderblock",
@@ -1221,7 +1221,7 @@
     "imageURL": "sr64cinderblock.webp",
     "tier": "b",
     "index": 67,
-    "sortOrder": 680
+    "sortOrder": 9170
   },
   {
     "displayName": "B-22 Model Citizen",
@@ -1239,7 +1239,7 @@
     "imageURL": "b22modelcitizen.webp",
     "tier": "b",
     "index": 68,
-    "sortOrder": 690
+    "sortOrder": 80
   },
   {
     "displayName": "IE-3 Martyr",
@@ -1257,7 +1257,7 @@
     "imageURL": "ie3martyr.webp",
     "tier": "b",
     "index": 69,
-    "sortOrder": 700
+    "sortOrder": 270
   },
   {
     "displayName": "IE-12 Righteous",
@@ -1275,7 +1275,7 @@
     "imageURL": "ie12righteous.webp",
     "tier": "b",
     "index": 70,
-    "sortOrder": 710
+    "sortOrder": 280
   },
   {
     "displayName": "IE-57 Hell-Bent",
@@ -1293,7 +1293,7 @@
     "imageURL": "ie57hellbent.webp",
     "tier": "b",
     "index": 71,
-    "sortOrder": 720
+    "sortOrder": 120
   },
   {
     "displayName": "GS-17 Frontier Marshal",
@@ -1311,7 +1311,7 @@
     "imageURL": "gs17frontiermarshal.webp",
     "tier": "b",
     "index": 72,
-    "sortOrder": 730
+    "sortOrder": 290
   },
   {
     "displayName": "GS-66 Lawmaker",
@@ -1329,7 +1329,7 @@
     "imageURL": "gs66lawmaker.webp",
     "tier": "b",
     "index": 73,
-    "sortOrder": 740
+    "sortOrder": 9180
   },
   {
     "displayName": "GS-11 Democracy\u0027s Deputy",
@@ -1347,7 +1347,7 @@
     "imageURL": "gs11democracysdeputy.webp",
     "tier": "b",
     "index": 74,
-    "sortOrder": 750
+    "sortOrder": 9010
   },
   {
     "displayName": "RE-824 Bearer of the Standard",
@@ -1365,7 +1365,7 @@
     "imageURL": "re824bearerofthestandard.webp",
     "tier": "b",
     "index": 75,
-    "sortOrder": 760
+    "sortOrder": 9190
   },
   {
     "displayName": "RE-1861 Parade Commander",
@@ -1383,7 +1383,7 @@
     "imageURL": "re1861paradecommander.webp",
     "tier": "b",
     "index": 76,
-    "sortOrder": 770
+    "sortOrder": 160
   },
   {
     "displayName": "RE-2310 Honorary Guard",
@@ -1401,7 +1401,7 @@
     "imageURL": "re2310honoraryguard.webp",
     "tier": "b",
     "index": 77,
-    "sortOrder": 780
+    "sortOrder": 300
   },
   {
     "displayName": "BP-20 Correct Officer",
@@ -1419,7 +1419,7 @@
     "imageURL": "bp20correctofficer.webp",
     "tier": "b",
     "index": 78,
-    "sortOrder": 790
+    "sortOrder": 320
   },
   {
     "displayName": "BP-32 Jackboot",
@@ -1437,7 +1437,7 @@
     "imageURL": "bp32jackboot.webp",
     "tier": "b",
     "index": 79,
-    "sortOrder": 800
+    "sortOrder": 170
   },
   {
     "displayName": "BP-77 Grand Juror",
@@ -1455,7 +1455,7 @@
     "imageURL": "bp77grandjuror.webp",
     "tier": "b",
     "index": 80,
-    "sortOrder": 810
+    "sortOrder": 9200
   },
   {
     "displayName": "AD-11 Livewire",
@@ -1473,7 +1473,7 @@
     "imageURL": "ad11livewire.webp",
     "tier": "b",
     "index": 81,
-    "sortOrder": 820
+    "sortOrder": 9020
   },
   {
     "displayName": "AD-26 Bleeding Edge",
@@ -1491,7 +1491,7 @@
     "imageURL": "ad26bleedingedge.webp",
     "tier": "b",
     "index": 82,
-    "sortOrder": 830
+    "sortOrder": 310
   },
   {
     "displayName": "AD-49 Apollonian",
@@ -1509,7 +1509,7 @@
     "imageURL": "ad49apollonian.webp",
     "tier": "b",
     "index": 83,
-    "sortOrder": 840
+    "sortOrder": 9210
   },
   {
     "displayName": "A-9 Helljumper",
@@ -1527,7 +1527,7 @@
     "imageURL": "a9helljumper.webp",
     "tier": "b",
     "index": 84,
-    "sortOrder": 850
+    "sortOrder": 150
   },
   {
     "displayName": "A-35 Recon",
@@ -1545,7 +1545,7 @@
     "imageURL": "a35recon.webp",
     "tier": "b",
     "index": 85,
-    "sortOrder": 860
+    "sortOrder": 160
   },
   {
     "displayName": "DS-42 Federation\u0027s Blade",
@@ -1563,7 +1563,7 @@
     "imageURL": "ds42federationsblade.webp",
     "tier": "b",
     "index": 86,
-    "sortOrder": 870
+    "sortOrder": 9220
   },
   {
     "displayName": "DS-191 Scorpion",
@@ -1581,7 +1581,7 @@
     "imageURL": "ds191scorpion.webp",
     "tier": "b",
     "index": 87,
-    "sortOrder": 880
+    "sortOrder": 330
   },
   {
     "displayName": "DS-10 Big Game Hunter",
@@ -1599,7 +1599,7 @@
     "imageURL": "ds10biggamehunter.webp",
     "tier": "b",
     "index": 88,
-    "sortOrder": 890
+    "sortOrder": 9030
   },
   {
     "displayName": "RS-40 Beast of Prey",
@@ -1617,7 +1617,7 @@
     "imageURL": "rs40beastofprey.webp",
     "tier": "b",
     "index": 89,
-    "sortOrder": 900
+    "sortOrder": 9230
   },
   {
     "displayName": "RS-20 Constrictor",
@@ -1635,7 +1635,7 @@
     "imageURL": "rs20constrictor.webp",
     "tier": "b",
     "index": 90,
-    "sortOrder": 910
+    "sortOrder": 180
   },
   {
     "displayName": "RS-6 Fiend Destroyer",
@@ -1653,7 +1653,7 @@
     "imageURL": "rs6fienddestroyer.webp",
     "tier": "b",
     "index": 91,
-    "sortOrder": 920
+    "sortOrder": 9080
   },
   {
     "displayName": "RS-89 Shadow Paragon",
@@ -1671,7 +1671,7 @@
     "imageURL": "rs89shadowparagon.webp",
     "tier": "b",
     "index": 92,
-    "sortOrder": 930
+    "sortOrder": 220
   },
   {
     "displayName": "RS-100 Sanctioner",
@@ -1689,7 +1689,7 @@
     "imageURL": "rs100sanctioner.webp",
     "tier": "b",
     "index": 93,
-    "sortOrder": 940
+    "sortOrder": 9040
   },
   {
     "displayName": "RS-67 Null Cipher",
@@ -1707,7 +1707,7 @@
     "imageURL": "rs67nullcipher.webp",
     "tier": "b",
     "index": 94,
-    "sortOrder": 950
+    "sortOrder": 360
   },
   {
     "displayName": "SA-7 Head First",
@@ -1725,7 +1725,7 @@
     "imageURL": "sa7headfirst.webp",
     "tier": "b",
     "index": 95,
-    "sortOrder": 960
+    "sortOrder": 340
   },
   {
     "displayName": "SA-8 Ram",
@@ -1743,7 +1743,7 @@
     "imageURL": "sa8ram.webp",
     "tier": "b",
     "index": 96,
-    "sortOrder": 970
+    "sortOrder": 9240
   },
   {
     "displayName": "DP-8 Mountain-Scaled",
@@ -1761,7 +1761,7 @@
     "imageURL": "dp8mountainscaled.webp",
     "tier": "b",
     "index": 97,
-    "sortOrder": 980
+    "sortOrder": 9090
   },
   {
     "displayName": "CPG-48 Sapper",
@@ -1779,7 +1779,7 @@
     "imageURL": "cpg48sapper.webp",
     "tier": "b",
     "index": 98,
-    "sortOrder": 990
+    "sortOrder": 370
   },
   {
     "displayName": "CPH-26 Commandant",
@@ -1797,7 +1797,7 @@
     "imageURL": "cph26commandant.webp",
     "tier": "b",
     "index": 99,
-    "sortOrder": 1000
+    "sortOrder": 230
   },
   {
     "displayName": "CPR-80 Bulwark",
@@ -1815,6 +1815,6 @@
     "imageURL": "cpr80bulwark.webp",
     "tier": "b",
     "index": 100,
-    "sortOrder": 1010
+    "sortOrder": 9250
   }
 ]
