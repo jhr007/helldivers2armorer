@@ -27,6 +27,9 @@ Thumbs.db
 # Temp working files
 temp/
 
+# Duplicate data files (data lives in src/wwwroot/data/)
+src/data/
+
 # Env / secrets
 .env
 *.env.local

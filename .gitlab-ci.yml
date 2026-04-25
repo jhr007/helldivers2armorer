@@ -61,6 +61,7 @@ build:
     - dotnet tool restore
     - dotnet gitversion /updateprojectfiles
     - echo "Building version ${GITVERSION_SEMVER}"
+    - dotnet slopwatch analyze -d . --output json --fail-on error
     - dotnet build Helldivers2Armorer.slnx --configuration Release --no-restore
     # Publish WASM app once (base href="/") — used for Docker and as E2E test target
     - dotnet publish src/Helldivers2Armorer.csproj --configuration Release --no-restore --no-build --output publish/

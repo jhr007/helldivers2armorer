@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "createdAt": "2026-04-25T18:55:38.9935974+00:00",
+  "updatedAt": "2026-04-25T18:55:38.9958765+00:00",
+  "description": "Initial baseline created by 'slopwatch init' on 2026-04-25 18:55:38 UTC",
+  "entries": [
+    {
+      "hash": "4e5fc531d0673e4a",
+      "ruleId": "SW005",
+      "filePath": "e2e/Helldivers2Armorer.E2E.csproj",
+      "lineNumber": 9,
+      "codeSnippet": "<TreatWarningsAsErrors>false</TreatWarningsAsErrors>",
+      "message": "TreatWarningsAsErrors is disabled - warnings will not fail the build",
+      "baselinedAt": "2026-04-25T18:55:38.9958523+00:00"
+    }
+  ]
+}

@@ -28,6 +28,7 @@ public sealed class AppFixture : IAsyncLifetime
         var provider = new PhysicalFileProvider(publishPath);
         var contentTypeProvider = new FileExtensionContentTypeProvider();
         contentTypeProvider.Mappings[".webp"] = "image/webp";
+        contentTypeProvider.Mappings[".dat"] = "application/octet-stream";
 
         app.UseStaticFiles(new StaticFileOptions
         {
@@ -67,6 +68,7 @@ public sealed class AppFixture : IAsyncLifetime
         var candidates = new[]
         {
             Path.Combine(baseDir, "wwwroot"),
+            Path.GetFullPath(Path.Combine(baseDir, "../../../../publish/wwwroot")),
             Path.GetFullPath(Path.Combine(baseDir, "../../../../src/bin/Debug/net10.0/wwwroot")),
             Path.GetFullPath(Path.Combine(baseDir, "../../../../src/bin/Release/net10.0/wwwroot")),
         };
