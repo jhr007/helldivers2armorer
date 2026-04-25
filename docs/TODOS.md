@@ -7,6 +7,39 @@ _nothing yet_
 - Set up GitLab CI pipeline (build, mirror to GitHub, push to gh-pages)
 - Set up GitLab → GitHub repository mirroring
 
+## Sort Order — Unowned Armors
+Record in-game position for these when acquired and update `sortOrder` in `armorsets.json` (currently parked at 9000+).
+
+**Light**
+- AD-11 Livewire
+- CE-67 Titan
+- DS-10 Big Game Hunter
+- GS-11 Democracy's Deputy
+- RS-100 Sanctioner
+
+**Medium**
+- AC-1 Dutiful
+- AF-91 Field Chemist
+- CE-81 Juggernaut
+- DP-8 Mountain-Scaled
+- FS-34 Exterminator
+- RS-6 Fiend Destroyer
+- SA-15 Drone Master
+- TR-7 Ambassador of the Brand
+- TR-9 Cavalier of Democracy
+- UF-84 Doubt Killer
+
+**Heavy**
+- AF-52 Lockdown
+- BP-77 Grand Juror
+- CE-101 Guerilla Gorilla
+- CPR-80 Bulwark
+- FS-11 Executioner
+- FS-61 Dreadnought
+- RE-824 Bearer of the Standard
+- SR-64 Cinderblock
+- TR-62 Knight
+
 ## Someday / Nice to Have
 - **Dynamic base path at runtime** — serve a `config.json` from the container with the base path, read it before Blazor initializes. Currently hardcoded to `/`; two publish targets (`--pathbase`) handle GitHub Pages vs Docker. See ADR-002.
 - **Live text filter** — a single text input that filters across all active filter dimensions as you type
