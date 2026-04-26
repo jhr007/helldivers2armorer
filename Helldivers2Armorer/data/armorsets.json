@@ -79,8 +79,8 @@
       "Light"
     ],
     "armorRating": 100,
-    "speed": 125,
-    "stamina": 550,
+    "speed": 550,
+    "stamina": 125,
     "passive": "Extra Padding",
     "warbondCode": "warbond1",
     "internalName": "b08lightgunner",

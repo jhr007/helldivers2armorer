@@ -36,6 +36,11 @@ body {
     line-height: 1.5;
 }
 
+#app {
+    min-height: 100vh;
+    background: var(--bg);
+}
+
 a { color: var(--gold); text-decoration: none; }
 a:hover { color: #e8c060; text-decoration: underline; }
 
@@ -371,6 +376,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     width: 110px;
     height: 110px;
     flex-shrink: 0;
+    align-self: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -390,7 +396,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     gap: 0.28rem;
     flex: 1;
     min-width: 0;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .armor-name {
@@ -408,8 +414,8 @@ a:hover { color: #e8c060; text-decoration: underline; }
     gap: 0.3rem;
 }
 .passive-icon {
-    width: 16px;
-    height: 16px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
     flex-shrink: 0;
 }
