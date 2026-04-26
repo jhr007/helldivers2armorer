@@ -22,12 +22,17 @@
 /* ── Reset / Base ───────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
-    height: 100%;
+html {
+    min-height: 100%;
+    background: var(--bg);
+}
+
+body {
+    min-height: 100vh;
     background: var(--bg);
     color: var(--text);
     font-family: var(--font-body);
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
 }
 
@@ -39,6 +44,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background: var(--bg);
 }
 
 .app-main {
@@ -111,7 +117,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     gap: 0.6rem;
 }
 
-.filter-controls { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.filter-controls { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-start; }
 
 .filter-select {
     background: #0d0e12;
@@ -197,6 +203,117 @@ a:hover { color: #e8c060; text-decoration: underline; }
 }
 .clear-all:hover { color: var(--text); border-color: var(--text-dim); }
 
+/* ── Search Input ───────────────────────────────────────────────────────── */
+.search-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: stretch;
+}
+.search-input {
+    background: #0d0e12;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.4rem 1.8rem 0.4rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    min-width: 220px;
+    transition: border-color 0.15s;
+}
+.search-input:focus { outline: none; border-color: var(--gold-dim); }
+.search-input::placeholder { color: var(--text-dim); }
+.search-clear {
+    position: absolute;
+    right: 0.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.6;
+    transition: opacity 0.1s, color 0.1s;
+}
+.search-clear:hover { opacity: 1; color: var(--text); }
+
+/* ── Custom Passive Dropdown ────────────────────────────────────────────── */
+.passive-dropdown {
+    position: relative;
+    min-width: 200px;
+}
+.passive-dropdown-trigger {
+    background: #0d0e12;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.4rem 1.8rem 0.4rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: border-color 0.15s;
+    position: relative;
+    white-space: nowrap;
+}
+.passive-dropdown-trigger:focus,
+.passive-dropdown.open .passive-dropdown-trigger { outline: none; border-color: var(--gold-dim); }
+.dropdown-arrow {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    pointer-events: none;
+}
+.passive-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 50;
+    background: #0d0e12;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    min-width: 100%;
+    max-height: 320px;
+    overflow-y: auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+.passive-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.45rem 0.75rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.1s, color 0.1s;
+}
+.passive-option:last-child { border-bottom: none; }
+.passive-option:hover { background: #1c1f25; color: var(--gold); }
+.passive-opt-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+    opacity: 0.85;
+}
+.dropdown-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 49;
+}
+
 /* ── Weight Class Sections ──────────────────────────────────────────────── */
 .weight-section { margin-bottom: 2.5rem; }
 
@@ -229,7 +346,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
 /* ── Armor Grid ─────────────────────────────────────────────────────────── */
 .armor-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 0.75rem;
 }
 
@@ -241,6 +358,8 @@ a:hover { color: #e8c060; text-decoration: underline; }
     overflow: hidden;
     transition: border-color 0.15s, background 0.15s;
     cursor: default;
+    display: flex;
+    flex-direction: row;
 }
 .armor-tile:hover {
     border-color: var(--gold-dim);
@@ -249,7 +368,9 @@ a:hover { color: #e8c060; text-decoration: underline; }
 
 .armor-img-wrap {
     background: #0d0e12;
-    aspect-ratio: 1 / 1;
+    width: 110px;
+    height: 110px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -263,15 +384,18 @@ a:hover { color: #e8c060; text-decoration: underline; }
 }
 
 .armor-info {
-    padding: 0.5rem 0.6rem;
+    padding: 0.25rem 0.375rem;
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.28rem;
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
 }
 
 .armor-name {
     font-family: var(--font-head);
-    font-size: 0.8rem;
+    font-size: 1.1rem;
     font-weight: 600;
     letter-spacing: 0.03em;
     color: var(--text);
@@ -290,20 +414,40 @@ a:hover { color: #e8c060; text-decoration: underline; }
     flex-shrink: 0;
 }
 .passive-name {
-    font-size: 0.72rem;
+    font-size: 1.0rem;
     color: var(--gold);
     font-family: var(--font-head);
     letter-spacing: 0.02em;
 }
 
+.armor-stats {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+.stat {
+    font-family: var(--font-head);
+    font-size: 1.0rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+}
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    margin-right: 0.2rem;
+}
+.stat-val { }
+.stat-val.stat-high { color: #6aaa5a; font-weight: 700; }
+.stat-val.stat-low  { color: #c05040; font-weight: 700; }
+
 .feature-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem;
-    margin-top: 0.1rem;
 }
 .feature-tag {
-    font-size: 0.62rem;
+    font-size: 0.8rem;
     font-family: var(--font-head);
     letter-spacing: 0.05em;
     color: #7ab46a;

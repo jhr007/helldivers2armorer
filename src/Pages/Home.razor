@@ -1,7 +1,7 @@
 @page "/"
 @inject ArmorDataService Data
 
-<PageTitle>HD2 Armorer</PageTitle>
+<PageTitle>Helldivers 2 Armorer</PageTitle>
 
 @if (!Data.IsLoaded)
 {
@@ -11,18 +11,43 @@
 }
 else
 {
+    @if (passiveDropdownOpen)
+    {
+        <div class="dropdown-backdrop" @onclick="() => passiveDropdownOpen = false"></div>
+    }
+
     <div class="filter-bar">
         <div class="filter-controls">
-            <select class="filter-select" @bind="selectedPassive" @bind:after="AddPassive">
-                <option value="">Passive ability...</option>
-                @foreach (var p in Data.Passives.OrderBy(p => p.DisplayName))
+            <div class="search-wrap">
+                <input class="search-input" type="text" placeholder="Search armor, passive, or tag..."
+                       @bind="searchText" @bind:event="oninput" />
+                @if (!string.IsNullOrEmpty(searchText))
                 {
-                    if (!activePassives.Contains(p.DisplayName))
-                    {
-                        <option value="@p.DisplayName">@p.DisplayName</option>
-                    }
+                    <button class="search-clear" @onclick="ClearSearch" aria-label="Clear search">×</button>
                 }
-            </select>
+            </div>
+
+            <div class="passive-dropdown @(passiveDropdownOpen ? "open" : "")">
+                <button class="passive-dropdown-trigger" @onclick="TogglePassiveDropdown">
+                    Passive ability...
+                    <span class="dropdown-arrow">▾</span>
+                </button>
+                @if (passiveDropdownOpen)
+                {
+                    <div class="passive-dropdown-menu">
+                        @foreach (var p in Data.Passives.OrderBy(p => p.DisplayName))
+                        {
+                            if (!activePassives.Contains(p.DisplayName))
+                            {
+                                <button class="passive-option" @onclick="() => SelectPassive(p.DisplayName)">
+                                    <img src="images/armorpassives/@p.ImageURL" class="passive-opt-icon" alt="" />
+                                    <span>@p.DisplayName</span>
+                                </button>
+                            }
+                        }
+                    </div>
+                }
+            </div>
 
             <select class="filter-select" @bind="selectedFeature" @bind:after="AddFeature">
                 <option value="">Feature tag...</option>
@@ -63,6 +88,17 @@ else
     </div>
 
     var filtered = Data.Filter(activePassives, activeFeatureTags);
+    if (!string.IsNullOrWhiteSpace(searchText))
+    {
+        var s = searchText.Trim();
+        filtered = filtered.Where(a =>
+            a.DisplayName.Contains(s, StringComparison.OrdinalIgnoreCase) ||
+            a.Passive.Contains(s, StringComparison.OrdinalIgnoreCase) ||
+            (Data.FeatureTags.TryGetValue(a.Passive, out var ftags) &&
+             ftags.Any(t => t.Contains(s, StringComparison.OrdinalIgnoreCase) ||
+                            FormatTag(t).Contains(s, StringComparison.OrdinalIgnoreCase)))
+        ).ToList();
+    }
 
     @foreach (var weightClass in new[] { "Light", "Medium", "Heavy" })
     {
@@ -74,6 +110,10 @@ else
                 <div class="armor-grid">
                     @foreach (var armor in group)
                     {
+                        var def  = WeightDefaults.GetValueOrDefault(armor.WeightClass);
+                        var arC  = armor.ArmorRating > def.AR      ? "stat-high" : armor.ArmorRating < def.AR      ? "stat-low" : "";
+                        var spdC = armor.Speed       > def.Speed    ? "stat-high" : armor.Speed       < def.Speed    ? "stat-low" : "";
+                        var staC = armor.Stamina     > def.Stamina  ? "stat-high" : armor.Stamina     < def.Stamina  ? "stat-low" : "";
                         <div class="armor-tile">
                             <div class="armor-img-wrap">
                                 <img class="armor-img" src="images/armor/@armor.ImageURL" alt="@armor.DisplayName" loading="lazy" />
@@ -86,6 +126,11 @@ else
                                         <img src="images/armorpassives/@pIcon" class="passive-icon" alt="" />
                                     }
                                     <span class="passive-name">@armor.Passive</span>
+                                </div>
+                                <div class="armor-stats">
+                                    <span class="stat"><span class="stat-label">AR</span><span class="stat-val @arC">@armor.ArmorRating</span></span>
+                                    <span class="stat"><span class="stat-label">SPD</span><span class="stat-val @spdC">@armor.Speed</span></span>
+                                    <span class="stat"><span class="stat-label">STA</span><span class="stat-val @staC">@armor.Stamina</span></span>
                                 </div>
                                 @if (Data.FeatureTags.TryGetValue(armor.Passive, out var tags))
                                 {
@@ -113,15 +158,25 @@ else
 @code {
     private HashSet<string> activePassives = [];
     private HashSet<string> activeFeatureTags = [];
-    private string selectedPassive = "";
     private string selectedFeature = "";
+    private string searchText = "";
+    private bool passiveDropdownOpen = false;
+
+    private static readonly Dictionary<string, (int AR, int Speed, int Stamina)> WeightDefaults = new()
+    {
+        ["Light"]  = (50,  550, 125),
+        ["Medium"] = (100, 500, 100),
+        ["Heavy"]  = (150, 450,  50),
+    };
 
     protected override async Task OnInitializedAsync() => await Data.LoadAsync();
 
-    private void AddPassive()
+    private void TogglePassiveDropdown() => passiveDropdownOpen = !passiveDropdownOpen;
+
+    private void SelectPassive(string name)
     {
-        if (!string.IsNullOrEmpty(selectedPassive)) activePassives.Add(selectedPassive);
-        selectedPassive = "";
+        activePassives.Add(name);
+        passiveDropdownOpen = false;
     }
 
     private void AddFeature()
@@ -130,9 +185,10 @@ else
         selectedFeature = "";
     }
 
+    private void ClearSearch() => searchText = "";
     private void RemovePassive(string p) => activePassives.Remove(p);
     private void RemoveFeatureTag(string t) => activeFeatureTags.Remove(t);
-    private void ClearAll() { activePassives.Clear(); activeFeatureTags.Clear(); }
+    private void ClearAll() { activePassives.Clear(); activeFeatureTags.Clear(); searchText = ""; }
 
     private static string FormatTag(string tag) =>
         string.Join(" ", tag.Split('-').Select(w => char.ToUpper(w[0]) + w[1..]));

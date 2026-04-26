@@ -4,7 +4,7 @@
 _nothing yet_
 
 ## Planned
-- Set up GitLab CI pipeline (build, mirror to GitHub, push to gh-pages)
+- ~~Set up GitLab CI pipeline (build, mirror to GitHub, push to gh-pages)~~ — done
 - Set up GitLab → GitHub repository mirroring
 
 ## Sort Order — Unowned Armors
@@ -41,7 +41,10 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - TR-62 Knight
 
 ## Someday / Nice to Have
+- **Switch data source to [helldivers-2/json](https://github.com/helldivers-2/json)** — community-maintained JSON API; evaluate schema compatibility before migrating
 - **Dynamic base path at runtime** — serve a `config.json` from the container with the base path, read it before Blazor initializes. Currently hardcoded to `/`; two publish targets (`--pathbase`) handle GitHub Pages vs Docker. See ADR-002.
-- **Live text filter** — a single text input that filters across all active filter dimensions as you type
+- ~~**Live text filter**~~ — done: searches armor name, passive, and feature tags; live on keystroke with X to clear
 - **Wiki source link per armor** — show where to acquire each armor piece (warbond, premium, etc.). The [Helldivers Wiki](https://helldivers.wiki.gg/wiki/Helldivers_2) is the reference source.
 - **Armor acquisition source** — display warbond/source on each tile so users know if they own or can get the armor
+ it would be nice to see the matching helmet/cape, but helmets & capes arent grouped..
+

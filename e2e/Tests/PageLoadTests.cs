@@ -62,8 +62,8 @@ public class PageLoadTests(AppFixture app, BrowserFixture browser)
     {
         var page = await GoAsync("/");
         await WaitForBlazor(page, ".filter-select");
-        var selects = await page.Locator(".filter-select").CountAsync();
-        Assert.Equal(2, selects);
+        Assert.Equal(1, await page.Locator(".filter-select").CountAsync());
+        Assert.Equal(1, await page.Locator(".passive-dropdown").CountAsync());
     }
 
     [Fact]

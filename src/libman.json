@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "@fontsource/barlow@5.2.8",
+      "destination": "wwwroot/fonts/barlow",
+      "files": [
+        "latin-400.css",
+        "latin-500.css",
+        "files/barlow-latin-400-normal.woff2",
+        "files/barlow-latin-500-normal.woff2"
+      ]
+    },
+    {
+      "library": "@fontsource/barlow-condensed@5.2.8",
+      "destination": "wwwroot/fonts/barlow-condensed",
+      "files": [
+        "latin-400.css",
+        "latin-600.css",
+        "latin-700.css",
+        "files/barlow-condensed-latin-400-normal.woff2",
+        "files/barlow-condensed-latin-600-normal.woff2",
+        "files/barlow-condensed-latin-700-normal.woff2"
+      ]
+    }
+  ]
+}

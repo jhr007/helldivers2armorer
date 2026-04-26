@@ -26,6 +26,14 @@ Static Blazor WASM app for filtering and browsing Helldivers 2 armor by passive 
 - Reference pattern: `c:/repos/CamShare/CamShare.E2E/` — same fixture structure, same CI image
 - Scope: page load / no-404 checks only. No smoke stage in CI.
 
+### Run tests after making changes
+After any non-trivial change, and before commit/push, publish the app and run the E2E suite:
+```
+dotnet publish src/Helldivers2Armorer.csproj --configuration Release --output publish/
+dotnet test e2e/Helldivers2Armorer.E2E.csproj --configuration Release
+```
+All 4 tests must pass before considering the work done.
+
 ## Memory (Memorizer MCP)
 This project has a dedicated workspace and project in the Memorizer MCP server. Use it to store and retrieve context across sessions — it persists independently of file-based memory.
 
@@ -47,6 +55,10 @@ mcp__memorizer__store(type: "reference", source: "LLM", projectId: "0f98bdfb-b0d
 
 ### Useful tags
 `architecture`, `reference`, `data`, `feature-tags`, `ci-cd`, `how-to`, `decision`
+
+## Tooling
+- **dotnet local tools manifest:** `dotnet-tools.json` at repo root (not `.config/`) — contains GitVersion and Slopwatch
+- **Static assets (fonts):** managed by libman via `src/libman.json` + `Microsoft.Web.LibraryManager.Build` NuGet package; restores automatically on `dotnet build` — no extra CI step needed. Fonts land in `src/wwwroot/fonts/`.
 
 ## Conventions
 - Sort order: numeric, starts at 10, increments by 10 — leave gaps for easy insertion
