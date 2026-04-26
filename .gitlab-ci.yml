@@ -64,7 +64,10 @@ build:
     - dotnet slopwatch analyze -d . --output json --fail-on error
     - dotnet build Helldivers2Armorer.slnx --configuration Release --no-restore
     # Publish WASM app once (base href="/") — used for Docker and as E2E test target
-    - dotnet publish Helldivers2Armorer/Helldivers2Armorer.csproj --configuration Release --no-restore --no-build --output publish/
+    # Note: --no-build is intentionally absent; fingerprint substitution in index.html
+    # requires the full publish pipeline (OverrideHtmlAssetPlaceholders targets won't
+    # run with --no-build, leaving #[.{fingerprint}] literals that 404 in the browser).
+    - dotnet publish Helldivers2Armorer/Helldivers2Armorer.csproj --configuration Release --no-restore --output publish/
     # Copy output for GitHub Pages and fix base href to match the sub-path
     - cp -r publish/ pages-publish/
     - |
