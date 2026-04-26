@@ -46,5 +46,5 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - ~~**Live text filter**~~ — done: searches armor name, passive, and feature tags; live on keystroke with X to clear
 - **Wiki source link per armor** — show where to acquire each armor piece (warbond, premium, etc.). The [Helldivers Wiki](https://helldivers.wiki.gg/wiki/Helldivers_2) is the reference source.
 - **Armor acquisition source** — display warbond/source on each tile so users know if they own or can get the armor
- it would be nice to see the matching helmet/cape, but helmets & capes arent grouped..
+- **Matching helmet/cape** — helmets and capes aren't grouped by armor set in the source data; would require a manual mapping or a richer data source
 
