@@ -374,7 +374,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
 .armor-img-wrap {
     background: #0d0e12;
     width: 110px;
-    height: 110px;
+    height: stretch;
     flex-shrink: 0;
     align-self: center;
     display: flex;
