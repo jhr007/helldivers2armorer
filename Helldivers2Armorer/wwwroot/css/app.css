@@ -395,7 +395,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
 
 .armor-name {
     font-family: var(--font-head);
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 600;
     letter-spacing: 0.03em;
     color: var(--text);
@@ -414,7 +414,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     flex-shrink: 0;
 }
 .passive-name {
-    font-size: 1.0rem;
+    font-size: 1.25rem;
     color: var(--gold);
     font-family: var(--font-head);
     letter-spacing: 0.02em;
@@ -427,12 +427,12 @@ a:hover { color: #e8c060; text-decoration: underline; }
 }
 .stat {
     font-family: var(--font-head);
-    font-size: 1.0rem;
+    font-size: 1.25rem;
     color: var(--text);
     letter-spacing: 0.02em;
 }
 .stat-label {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
     color: var(--text-dim);
     letter-spacing: 0.08em;
     margin-right: 0.2rem;
@@ -447,7 +447,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     gap: 0.25rem;
 }
 .feature-tag {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
     font-family: var(--font-head);
     letter-spacing: 0.05em;
     color: #7ab46a;
