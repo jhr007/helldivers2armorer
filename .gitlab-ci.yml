@@ -64,14 +64,14 @@ build:
     - dotnet slopwatch analyze -d . --output json --fail-on error
     - dotnet build Helldivers2Armorer.slnx --configuration Release --no-restore
     # Publish WASM app once (base href="/") — used for Docker and as E2E test target
-    - dotnet publish src/Helldivers2Armorer.csproj --configuration Release --no-restore --no-build --output publish/
+    - dotnet publish Helldivers2Armorer/Helldivers2Armorer.csproj --configuration Release --no-restore --no-build --output publish/
     # Copy output for GitHub Pages and fix base href to match the sub-path
     - cp -r publish/ pages-publish/
     - |
       sed -i "s|<base href=\"/\" />|<base href=\"${PAGES_BASE_HREF}\" />|" \
         pages-publish/wwwroot/index.html
     # E2E self-contained linux-x64 publish (bundles runtime — no dotnet in playwright image)
-    - dotnet publish e2e/Helldivers2Armorer.E2E.csproj --configuration Release -r linux-x64 --self-contained --output e2e-publish/
+    - dotnet publish Helldivers2Armorer.E2E/Helldivers2Armorer.E2E.csproj --configuration Release -r linux-x64 --self-contained --output e2e-publish/
     # Copy wwwroot alongside the E2E binary so AppFixture can locate static files
     - cp -r publish/wwwroot e2e-publish/wwwroot
   cache:

@@ -7,7 +7,7 @@
     {
       "hash": "4e5fc531d0673e4a",
       "ruleId": "SW005",
-      "filePath": "e2e/Helldivers2Armorer.E2E.csproj",
+      "filePath": "Helldivers2Armorer.E2E/Helldivers2Armorer.E2E.csproj",
       "lineNumber": 9,
       "codeSnippet": "<TreatWarningsAsErrors>false</TreatWarningsAsErrors>",
       "message": "TreatWarningsAsErrors is disabled - warnings will not fail the build",

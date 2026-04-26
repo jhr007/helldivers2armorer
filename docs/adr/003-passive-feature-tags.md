@@ -11,7 +11,7 @@ Two separate filter dimensions:
 1. **Passives filter** — filter directly by passive name, shown with passive icons
 2. **Feature tags filter** — filter by human-readable tags derived from a static mapping
 
-The mapping lives in `src/data/feature-tags.json` and maps each passive to one or more feature tag strings. This file is the source of truth and should be updated when new passives are added or game descriptions are clarified.
+The mapping lives in `Helldivers2Armorer/data/feature-tags.json` and maps each passive to one or more feature tag strings. This file is the source of truth and should be updated when new passives are added or game descriptions are clarified.
 
 ## Initial Mapping (verify against game — may be incomplete)
 

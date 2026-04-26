@@ -48,10 +48,10 @@ Located above the tile grid. Contains:
 Armor within each weight class is sorted by `sortOrder` field (ascending). Values start at 10, increment by 10, matching in-game ordering. Gaps allow manual insertion without renumbering.
 
 ## Data Source
-- `src/data/armorsets.json` — armor records
-- `src/data/feature-tags.json` — passive → feature tag mapping
-- `src/wwwroot/images/armor/` — armor images
-- `src/wwwroot/images/armorpassives/` — passive icons
+- `Helldivers2Armorer/data/armorsets.json` — armor records
+- `Helldivers2Armorer/data/feature-tags.json` — passive → feature tag mapping
+- `Helldivers2Armorer/wwwroot/images/armor/` — armor images
+- `Helldivers2Armorer/wwwroot/images/armorpassives/` — passive icons
 
 ## Out of Scope (see TODOS.md)
 - Live text search across all fields

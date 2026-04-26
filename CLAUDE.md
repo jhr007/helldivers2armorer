@@ -11,8 +11,8 @@ Static Blazor WASM app for filtering and browsing Helldivers 2 armor by passive 
 
 ## Data
 - Armor data and images copied locally from [hd2-random-strat](https://github.com/Selenestica/hd2-random-strat) by Selenestica
-- Source of truth is local JSON files in `src/data/`
-- Images live in `src/wwwroot/images/`
+- Source of truth is local JSON files in `Helldivers2Armorer/data/`
+- Images live in `Helldivers2Armorer/wwwroot/images/`
 - Armor has a `sortOrder` field (starts at 10, increments by 10) to match in-game ordering — edit manually to reorder
 
 ## Key Docs
@@ -29,8 +29,8 @@ Static Blazor WASM app for filtering and browsing Helldivers 2 armor by passive 
 ### Run tests after making changes
 After any non-trivial change, and before commit/push, publish the app and run the E2E suite:
 ```
-dotnet publish src/Helldivers2Armorer.csproj --configuration Release --output publish/
-dotnet test e2e/Helldivers2Armorer.E2E.csproj --configuration Release
+dotnet publish Helldivers2Armorer/Helldivers2Armorer.csproj --configuration Release --output publish/
+dotnet test Helldivers2Armorer.E2E/Helldivers2Armorer.E2E.csproj --configuration Release
 ```
 All 4 tests must pass before considering the work done.
 
@@ -58,11 +58,11 @@ mcp__memorizer__store(type: "reference", source: "LLM", projectId: "0f98bdfb-b0d
 
 ## Tooling
 - **dotnet local tools manifest:** `dotnet-tools.json` at repo root (not `.config/`) — contains GitVersion and Slopwatch
-- **Static assets (fonts):** managed by libman via `src/libman.json` + `Microsoft.Web.LibraryManager.Build` NuGet package; restores automatically on `dotnet build` — no extra CI step needed. Fonts land in `src/wwwroot/fonts/`.
+- **Static assets (fonts):** managed by libman via `Helldivers2Armorer/libman.json` + `Microsoft.Web.LibraryManager.Build` NuGet package; restores automatically on `dotnet build` — no extra CI step needed. Fonts land in `Helldivers2Armorer/wwwroot/fonts/`.
 
 ## Conventions
 - Sort order: numeric, starts at 10, increments by 10 — leave gaps for easy insertion
 - All filter logic uses AND semantics (armor must match ALL selected filters)
-- Passive → feature tag mapping is defined in `src/data/feature-tags.json`
+- Passive → feature tag mapping is defined in `Helldivers2Armorer/data/feature-tags.json`
 - Do not add error handling for impossible states; trust Blazor's component model
 - No comments unless the WHY is non-obvious
