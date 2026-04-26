@@ -113,6 +113,7 @@ pages:
   interruptible: false
   image:
     name: alpine/git:latest
+    entrypoint: [""]
     pull_policy: if-not-present
   needs:
     - job: e2e
