@@ -41,6 +41,9 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - TR-62 Knight
 
 ## Someday / Nice to Have
+- **Update armor images from wiki** — replace current images with higher-quality versions from [Helldivers Wiki](https://helldivers.wiki.gg/wiki/Helldivers_2); images live in `Helldivers2Armorer/wwwroot/images/armor/`
+
+
 - **Switch data source to [helldivers-2/json](https://github.com/helldivers-2/json)** — community-maintained JSON API; evaluate schema compatibility before migrating
 - **Dynamic base path at runtime** — serve a `config.json` from the container with the base path, read it before Blazor initializes. Currently hardcoded to `/`; two publish targets (`--pathbase`) handle GitHub Pages vs Docker. See ADR-002.
 - ~~**Live text filter**~~ — done: searches armor name, passive, and feature tags; live on keystroke with X to clear

@@ -208,6 +208,20 @@ a:hover { color: #e8c060; text-decoration: underline; }
 }
 .clear-all:hover { color: var(--text); border-color: var(--text-dim); }
 
+/* ── Selection Bar ──────────────────────────────────────────────────────── */
+.selection-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.25rem;
+}
+.selection-count {
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-family: var(--font-head);
+    letter-spacing: 0.04em;
+}
+
 /* ── Search Input ───────────────────────────────────────────────────────── */
 .search-wrap {
     position: relative;
@@ -361,14 +375,22 @@ a:hover { color: #e8c060; text-decoration: underline; }
     border: 1px solid var(--border);
     border-radius: 4px;
     overflow: hidden;
-    transition: border-color 0.15s, background 0.15s;
-    cursor: default;
+    transition: border-color 0.15s, background 0.15s, outline-color 0.15s;
+    cursor: pointer;
     display: flex;
     flex-direction: row;
 }
 .armor-tile:hover {
     border-color: var(--gold-dim);
     background: var(--bg-card-hover);
+}
+.armor-tile.selected {
+    outline: 2px solid var(--gold);
+    border-color: var(--gold);
+}
+.armor-tile.selected:hover {
+    outline-color: #e8c060;
+    border-color: #e8c060;
 }
 
 .armor-img-wrap {

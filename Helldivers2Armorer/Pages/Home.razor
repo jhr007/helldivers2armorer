@@ -85,6 +85,14 @@ else
                 <button class="clear-all" @onclick="ClearAll">Clear all</button>
             </div>
         }
+
+        @if (selectedArmors.Count > 0)
+        {
+            <div class="selection-bar">
+                <span class="selection-count">@selectedArmors.Count selected</span>
+                <button class="clear-all" @onclick="ClearSelections">Clear selections</button>
+            </div>
+        }
     </div>
 
     var filtered = Data.Filter(activePassives, activeFeatureTags);
@@ -114,7 +122,7 @@ else
                         var arC  = armor.ArmorRating > def.AR       ? "stat-high" : armor.ArmorRating < def.AR       ? "stat-low" : "";
                         var spdC = armor.Speed       > def.Speed    ? "stat-high" : armor.Speed       < def.Speed    ? "stat-low" : "";
                         var staC = armor.Stamina     > def.Stamina  ? "stat-high" : armor.Stamina     < def.Stamina  ? "stat-low" : "";
-                        <div class="armor-tile">
+                        <div class="armor-tile @(selectedArmors.Contains(armor.InternalName) ? "selected" : "")" @onclick="() => ToggleSelection(armor.InternalName)">
                             <div class="armor-img-wrap">
                                 <img class="armor-img" src="images/armor/@armor.ImageURL" alt="@armor.DisplayName" loading="lazy" />
                             </div>
@@ -158,6 +166,7 @@ else
 @code {
     private HashSet<string> activePassives = [];
     private HashSet<string> activeFeatureTags = [];
+    private HashSet<string> selectedArmors = [];
     private string selectedFeature = "";
     private string searchText = "";
     private bool passiveDropdownOpen = false;
@@ -185,6 +194,11 @@ else
         selectedFeature = "";
     }
 
+    private void ToggleSelection(string internalName)
+    {
+        if (!selectedArmors.Remove(internalName)) selectedArmors.Add(internalName);
+    }
+    private void ClearSelections() => selectedArmors.Clear();
     private void ClearSearch() => searchText = "";
     private void RemovePassive(string p) => activePassives.Remove(p);
     private void RemoveFeatureTag(string t) => activeFeatureTags.Remove(t);
