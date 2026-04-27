@@ -385,7 +385,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     background: var(--bg-card-hover);
 }
 .armor-tile.selected {
-    outline: 2px solid var(--gold);
+    outline: 3px solid var(--gold);
     border-color: var(--gold);
 }
 .armor-tile.selected:hover {
@@ -405,8 +405,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     overflow: hidden;
 }
 .armor-img {
-    width: 100%;
-    height: 100%;
+    height: 150px;
     object-fit: contain;
     display: block;
 }
@@ -434,6 +433,10 @@ a:hover { color: #e8c060; text-decoration: underline; }
     display: flex;
     align-items: center;
     gap: 0.3rem;
+    cursor: pointer;
+    width: fit-content;
+    border-radius: 2px;
+    transition: opacity 0.15s;
 }
 .passive-icon {
     width: 30px;
@@ -483,8 +486,15 @@ a:hover { color: #e8c060; text-decoration: underline; }
     border: 1px solid rgba(74, 130, 58, 0.25);
     border-radius: 2px;
     padding: 0.05rem 0.3rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
     white-space: nowrap;
 }
+.feature-tag:hover {
+    background: rgba(74, 130, 58, 0.25);
+    border-color: rgba(74, 130, 58, 0.5);
+}
+.armor-passive:hover { opacity: 0.75; }
 
 /* ── No Results ─────────────────────────────────────────────────────────── */
 .no-results {

@@ -128,7 +128,7 @@ else
                             </div>
                             <div class="armor-info">
                                 <div class="armor-name">@armor.DisplayName</div>
-                                <div class="armor-passive">
+                                <div class="armor-passive" @onclick="() => SelectPassive(armor.Passive)" @onclick:stopPropagation="true">
                                     @if (Data.PassiveIconMap.TryGetValue(armor.Passive, out var pIcon))
                                     {
                                         <img src="images/armorpassives/@pIcon" class="passive-icon" alt="" />
@@ -145,7 +145,7 @@ else
                                     <div class="feature-tags">
                                         @foreach (var tag in tags)
                                         {
-                                            <span class="feature-tag">@FormatTag(tag)</span>
+                                            <span class="feature-tag" @onclick="() => activeFeatureTags.Add(tag)" @onclick:stopPropagation="true">@FormatTag(tag)</span>
                                         }
                                     </div>
                                 }
