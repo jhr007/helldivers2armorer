@@ -131,7 +131,7 @@ pages:
     - git checkout -b gh-pages
     - git add .
     - git commit -m "Deploy v${GITVERSION_SEMVER} [skip ci]"
-    - git remote add origin "https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+    - git remote add origin "https://oauth2:${GL_PUSH_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
     - git push --force origin gh-pages
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
