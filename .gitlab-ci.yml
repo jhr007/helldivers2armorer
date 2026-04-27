@@ -125,6 +125,7 @@ pages:
   script:
     - git config --global user.email "ci@gitlab.lan"
     - git config --global user.name "GitLab CI"
+    - git config --global http.sslVerify false
     - cd pages-publish/wwwroot
     - git init
     - git checkout -b gh-pages
