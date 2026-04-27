@@ -111,7 +111,7 @@ else
                     @foreach (var armor in group)
                     {
                         var def  = WeightDefaults.GetValueOrDefault(armor.WeightClass);
-                        var arC  = armor.ArmorRating > def.AR      ? "stat-high" : armor.ArmorRating < def.AR      ? "stat-low" : "";
+                        var arC  = armor.ArmorRating > def.AR       ? "stat-high" : armor.ArmorRating < def.AR       ? "stat-low" : "";
                         var spdC = armor.Speed       > def.Speed    ? "stat-high" : armor.Speed       < def.Speed    ? "stat-low" : "";
                         var staC = armor.Stamina     > def.Stamina  ? "stat-high" : armor.Stamina     < def.Stamina  ? "stat-low" : "";
                         <div class="armor-tile">

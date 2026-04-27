@@ -2,8 +2,7 @@ stages:
   - version
   - build
   - e2e
-  - pages
-  - docker
+  - release
 
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
@@ -104,12 +103,34 @@ e2e:
     - job: build
       artifacts: false
 
+# ── Tag the release commit ───────────────────────────────────────────────
+tag-release:
+  stage: release
+  interruptible: false
+  image:
+    name: alpine/git:latest
+    entrypoint: [""]
+    pull_policy: if-not-present
+  needs:
+    - job: e2e
+      artifacts: false
+    - job: version
+      artifacts: true
+  script:
+    - git config --global user.email "ci@gitlab.lan"
+    - git config --global user.name "GitLab CI"
+    - git config --global http.sslVerify false
+    - git tag -f "v${GITVERSION_SEMVER}" -m "Release v${GITVERSION_SEMVER}"
+    - git push --force "https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "refs/tags/v${GITVERSION_SEMVER}"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+
 # ── Deploy static output to gh-pages branch ──────────────────────────────
 # GitLab server-side mirroring pushes gh-pages → GitHub, which GitHub Pages serves.
 # Note: if the GitLab mirror is configured to mirror only named branches, ensure
 # gh-pages is included (Settings → Repository → Mirroring).
 pages:
-  stage: pages
+  stage: release
   interruptible: false
   image:
     name: alpine/git:latest
@@ -138,7 +159,7 @@ pages:
 
 # ── Docker image for homelab ──────────────────────────────────────────────
 docker:
-  stage: docker
+  stage: release
   image: docker:latest
   services:
     - docker:dind
