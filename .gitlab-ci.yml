@@ -17,7 +17,7 @@ variables:
   # Playwright browsers pre-installed in the playwright/dotnet image at /ms-playwright
   PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
   # GitHub Pages sub-path — must match GitHub repo name
-  PAGES_BASE_HREF: /Helldivers2Armorer/
+  PAGES_BASE_HREF: /helldivers2armorer/
 
 # ── Shared Playwright job template ────────────────────────────────────────
 .playwright:
