@@ -3,6 +3,7 @@ stages:
   - build
   - e2e
   - release
+  - deploy
 
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
@@ -183,3 +184,31 @@ docker:
     - docker push $IMAGE_NAME:latest
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
+
+# ── Deploy via Portainer webhook ──────────────────────────────────────────
+# PORTAINER_WEBHOOK_URL stored in GitLab CI/CD variables (Settings → CI/CD → Variables)
+# ?tag= tells Portainer to pull that specific tag — commit SHA guarantees a fresh pull.
+deploy:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - |
+      if [ -z "$PORTAINER_WEBHOOK_URL" ]; then
+        echo "PORTAINER_WEBHOOK_URL not set — skipping."
+        exit 0
+      fi
+      echo "Triggering Portainer redeploy with tag $CI_COMMIT_SHA..."
+      HTTP_CODE=$(curl --insecure --silent --max-time 30 \
+        --write-out "%{http_code} %{time_total}s" --output /tmp/portainer_response.txt \
+        -X POST "${PORTAINER_WEBHOOK_URL}?tag=${CI_COMMIT_SHA}")
+      echo "HTTP status: $HTTP_CODE"
+      echo "Response: $(cat /tmp/portainer_response.txt)"
+      if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+        echo "Portainer returned HTTP $HTTP_CODE"
+        exit 1
+      fi
+      echo "Portainer notified."
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  needs:
+    - job: docker
