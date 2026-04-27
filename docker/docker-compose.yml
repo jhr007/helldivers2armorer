@@ -7,6 +7,7 @@ services:
   helldivers2armorer:
     image: registry.gitlab.lan:5050/jhr/helldivers2armorer:latest
     pull_policy: always
+    restart: unless-stopped
     stdin_open: true
     tty: true
     # ports:
@@ -14,10 +15,10 @@ services:
     networks:
       - backend
     labels:
-      - my.domain=hd2armorer.lan
       - traefik.enable=true
+      - traefik.docker.network=backend
       - traefik.http.routers.hd2armorer.tls=true
-
+      - traefik.http.routers.hd2armorer.rule=Host(`hd2armorer.lan`)
       - traefik.http.routers.hd2armorer.service=hd2armorer_svc
       - traefik.http.services.hd2armorer_svc.loadbalancer.server.port=80
       - traefik.http.services.hd2armorer_svc.loadbalancer.server.scheme=http
