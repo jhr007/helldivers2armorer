@@ -7,7 +7,7 @@ Static Blazor WASM app for filtering and browsing Helldivers 2 armor by passive 
 - **Framework:** Blazor WebAssembly, .NET 10
 - **Hosting:** GitHub Pages (primary) + homelab Docker (secondary)
 - **CI/CD:** Local GitLab instance (`ssh://git@gitlab.lan:7122/jhr/helldivers2armorer.git`) — builds and mirrors to GitHub, pushes artifacts to `gh-pages` branch
-- **GitHub Pages URL:** `https://jhr.github.io/Helldivers2Armorer/`
+- **GitHub Pages URL:** `https://jhr007.github.io/Helldivers2Armorer/`
 
 ## Data
 - Armor data and images copied locally from [hd2-random-strat](https://github.com/Selenestica/hd2-random-strat) by Selenestica
