@@ -123,8 +123,8 @@ pages:
     - job: version
       artifacts: true
   script:
-    - git config user.email "ci@gitlab.lan"
-    - git config user.name "GitLab CI"
+    - git config --global user.email "ci@gitlab.lan"
+    - git config --global user.name "GitLab CI"
     - cd pages-publish/wwwroot
     - git init
     - git checkout -b gh-pages
