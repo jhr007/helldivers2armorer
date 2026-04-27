@@ -149,6 +149,7 @@ pages:
     - git config --global user.name "GitLab CI"
     - git config --global http.sslVerify false
     - cd pages-publish/wwwroot
+    - touch .nojekyll
     - git init
     - git checkout -b gh-pages
     - git add .
