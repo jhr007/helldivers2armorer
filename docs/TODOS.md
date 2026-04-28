@@ -41,6 +41,9 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - TR-62 Knight
 
 ## Someday / Nice to Have
+- **Tile selection UX** — clicking a tile to select it sets user expectations that something will happen (e.g. compare two armors side-by-side, view a detail panel). Currently selection has no payoff. Either add a comparison feature or remove tile selection.
+  - Idea: select 2 armors → show a comparison panel highlighting stat differences
+
 - **Update armor images from wiki** — replace current images with higher-quality versions from [Helldivers Wiki](https://helldivers.wiki.gg/wiki/Helldivers_2); images live in `Helldivers2Armorer/wwwroot/images/armor/`
 
 
