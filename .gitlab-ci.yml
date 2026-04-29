@@ -200,7 +200,7 @@ deploy:
       fi
       echo "Triggering Portainer redeploy with tag $CI_COMMIT_SHA..."
       HTTP_CODE=$(curl --insecure --silent --max-time 30 \
-        --write-out "%{http_code} %{time_total}s" --output /tmp/portainer_response.txt \
+        --write-out "%{http_code}" --output /tmp/portainer_response.txt \
         -X POST "${PORTAINER_WEBHOOK_URL}?tag=${CI_COMMIT_SHA}")
       echo "HTTP status: $HTTP_CODE"
       echo "Response: $(cat /tmp/portainer_response.txt)"
