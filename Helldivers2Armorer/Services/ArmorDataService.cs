@@ -10,6 +10,7 @@ public class ArmorDataService(HttpClient http)
 
     public List<ArmorSet> ArmorSets { get; private set; } = [];
     public List<ArmorPassive> Passives { get; private set; } = [];
+    public Dictionary<string, ArmorPassive> PassiveMap { get; private set; } = [];
     public Dictionary<string, List<string>> FeatureTags { get; private set; } = [];
     public IReadOnlyList<string> AllFeatureTags { get; private set; } = [];
     public Dictionary<string, string> PassiveIconMap { get; private set; } = [];
@@ -20,8 +21,9 @@ public class ArmorDataService(HttpClient http)
         if (IsLoaded) return;
         ArmorSets = await http.GetFromJsonAsync<List<ArmorSet>>("data/armorsets.json", Opts) ?? [];
         Passives = await http.GetFromJsonAsync<List<ArmorPassive>>("data/armorpassives.json", Opts) ?? [];
-        FeatureTags = await http.GetFromJsonAsync<Dictionary<string, List<string>>>("data/feature-tags.json", Opts) ?? [];
-        AllFeatureTags = FeatureTags.Values.SelectMany(x => x).Distinct().OrderBy(x => x).ToList();
+        PassiveMap = Passives.ToDictionary(p => p.DisplayName);
+        FeatureTags = Passives.ToDictionary(p => p.DisplayName, p => p.AbilityTags);
+        AllFeatureTags = Passives.SelectMany(p => p.AbilityTags).Distinct().OrderBy(x => x).ToList();
         PassiveIconMap = Passives.ToDictionary(p => p.DisplayName, p => p.ImageURL);
         IsLoaded = true;
     }

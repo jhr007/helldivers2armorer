@@ -496,6 +496,19 @@ a:hover { color: #e8c060; text-decoration: underline; }
 }
 .armor-passive:hover { opacity: 0.75; }
 
+/* ── Passive Description ────────────────────────────────────────────────── */
+.passive-desc-br,
+.passive-desc-pre {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.45;
+}
+.passive-desc-pre {
+    font-family: var(--font-body);
+    white-space: pre;
+    margin: 0;
+}
+
 /* ── No Results ─────────────────────────────────────────────────────────── */
 .no-results {
     text-align: center;

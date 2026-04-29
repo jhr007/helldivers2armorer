@@ -136,9 +136,18 @@ else
                                     <span class="passive-name">@armor.Passive</span>
                                 </div>
                                 <div class="armor-stats">
-                                    <span class="stat"><span class="stat-label">AR</span><span class="stat-val @arC">@armor.ArmorRating</span></span>
-                                    <span class="stat"><span class="stat-label">SPD</span><span class="stat-val @spdC">@armor.Speed</span></span>
-                                    <span class="stat"><span class="stat-label">STA</span><span class="stat-val @staC">@armor.Stamina</span></span>
+                                    <span class="stat">
+                                        <span class="stat-label">AR</span>
+                                        <span class="stat-val @arC">@armor.ArmorRating</span>
+                                    </span>
+                                    <span class="stat">
+                                        <span class="stat-label">SPD</span>
+                                        <span class="stat-val @spdC">@armor.Speed</span>
+                                    </span>
+                                    <span class="stat">
+                                        <span class="stat-label">STA</span>
+                                        <span class="stat-val @staC">@armor.Stamina</span>
+                                    </span>
                                 </div>
                                 @if (Data.FeatureTags.TryGetValue(armor.Passive, out var tags))
                                 {
@@ -148,6 +157,11 @@ else
                                             <span class="feature-tag" @onclick="() => activeFeatureTags.Add(tag)" @onclick:stopPropagation="true">@FormatTag(tag)</span>
                                         }
                                     </div>
+                                }
+                                @if (Data.PassiveMap.TryGetValue(armor.Passive, out var passiveInfo) && !string.IsNullOrEmpty(passiveInfo.ShortDescription))
+                                {
+                                    <div class="passive-desc-br">@((MarkupString)passiveInfo.ShortDescription.Replace("\n", "<br/>"))</div>
+                                    <pre class="passive-desc-pre">@passiveInfo.ShortDescription</pre>
                                 }
                             </div>
                         </div>
