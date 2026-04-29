@@ -1828,7 +1828,7 @@
     "passive": "Oxygenator",
     "warbondCode": "exo_experts",
     "internalName": "o3freespirit",
-    "imageURL": "o3freespirit.webp",
+    "imageURL": "o3freespirit.png",
     "tier": "b",
     "index": 101,
     "sortOrder": 9090
@@ -1844,7 +1844,7 @@
     "passive": "Oxygenator",
     "warbondCode": "superstore",
     "internalName": "o44bondedpilot",
-    "imageURL": "o44bondedpilot.webp",
+    "imageURL": "o44bondedpilot.png",
     "tier": "b",
     "index": 102,
     "sortOrder": 9100
@@ -1860,7 +1860,7 @@
     "passive": "Oxygenator",
     "warbondCode": "exo_experts",
     "internalName": "o2heavyoperator",
-    "imageURL": "o2heavyoperator.webp",
+    "imageURL": "o2heavyoperator.png",
     "tier": "b",
     "index": 103,
     "sortOrder": 9110

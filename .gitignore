@@ -21,8 +21,9 @@ e2e-publish/
 .DS_Store
 Thumbs.db
 
-# Claude Code local config
-.claude/
+# Claude Code local config (settings are personal; commands/ is project-level)
+.claude/settings.json
+.claude/settings.local.json
 
 # Temp working files
 temp/

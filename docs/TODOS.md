@@ -51,7 +51,6 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - **Missing passive icons** — two passive icons are placeholders; the wiki icons have a "wiki-use only" restriction from their creator (User:Dogo314), so alternatives are needed (game file extraction or permission request):
   - `Acclimated` — currently using `inflammable.png`; proper icon: [`Acclimated_Armor_Passive_Icon.svg`](https://helldivers.wiki.gg/wiki/File:Acclimated_Armor_Passive_Icon.svg)
   - `Oxygenator` — currently using `extrapadding.png`; proper icon: [`Oxygenator_Armor_Passive_Icon.svg`](https://helldivers.wiki.gg/wiki/File:Oxygenator_Armor_Passive_Icon.svg)
-- **Missing armor images** — three new Oxygenator armors need images in `wwwroot/images/armor/`: `o3freespirit.webp`, `o44bondedpilot.webp`, `o2heavyoperator.webp`
 
 
 - **Switch data source to [helldivers-2/json](https://github.com/helldivers-2/json)** — community-maintained JSON API; evaluate schema compatibility before migrating
