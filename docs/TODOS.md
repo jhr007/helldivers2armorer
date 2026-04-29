@@ -15,6 +15,7 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - CE-67 Titan
 - DS-10 Big Game Hunter
 - GS-11 Democracy's Deputy
+- O-3 Free Spirit *(new — Exo Experts warbond)*
 - RS-100 Sanctioner
 
 **Medium**
@@ -23,6 +24,7 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - CE-81 Juggernaut
 - DP-8 Mountain-Scaled
 - FS-34 Exterminator
+- O-44 Bonded Pilot *(new — Superstore)*
 - RS-6 Fiend Destroyer
 - SA-15 Drone Master
 - TR-7 Ambassador of the Brand
@@ -36,6 +38,7 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - CPR-80 Bulwark
 - FS-11 Executioner
 - FS-61 Dreadnought
+- O-2 Heavy Operator *(new — Exo Experts warbond)*
 - RE-824 Bearer of the Standard
 - SR-64 Cinderblock
 - TR-62 Knight
@@ -45,6 +48,10 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
   - Idea: select 2 armors → show a comparison panel highlighting stat differences
 
 - **Update armor images from wiki** — replace current images with higher-quality versions from [Helldivers Wiki](https://helldivers.wiki.gg/wiki/Helldivers_2); images live in `Helldivers2Armorer/wwwroot/images/armor/`
+- **Missing passive icons** — two passive icons are placeholders; the wiki icons have a "wiki-use only" restriction from their creator (User:Dogo314), so alternatives are needed (game file extraction or permission request):
+  - `Acclimated` — currently using `inflammable.png`; proper icon: [`Acclimated_Armor_Passive_Icon.svg`](https://helldivers.wiki.gg/wiki/File:Acclimated_Armor_Passive_Icon.svg)
+  - `Oxygenator` — currently using `extrapadding.png`; proper icon: [`Oxygenator_Armor_Passive_Icon.svg`](https://helldivers.wiki.gg/wiki/File:Oxygenator_Armor_Passive_Icon.svg)
+- **Missing armor images** — three new Oxygenator armors need images in `wwwroot/images/armor/`: `o3freespirit.webp`, `o44bondedpilot.webp`, `o2heavyoperator.webp`
 
 
 - **Switch data source to [helldivers-2/json](https://github.com/helldivers-2/json)** — community-maintained JSON API; evaluate schema compatibility before migrating

@@ -345,8 +345,50 @@
     "imageURL": "concussivepadding.webp",
     "tier": "b",
     "index": 24,
-    "description": "Provides 50% resistance to explosive damage.",
-    "shortDescription": "50% explosive dmg resistance",
-    "abilityTags": [ "concussive-protection" ]
+    "description": "Provides 50% resistance to explosive damage.\nIncreases initial inventory and holding capacity of throwables by +2.",
+    "shortDescription": "50% explosive dmg resistance\n+2 throwables",
+    "abilityTags": [ "concussive-protection", "bonus-throwables" ]
+  },
+  {
+    "displayName": "Concussive Padding, Hazmat",
+    "type": "Equipment",
+    "category": "armor",
+    "tags": [ "ArmorPassive" ],
+    "warbondCode": "warbond24",
+    "internalName": "concussivepaddinghamat",
+    "imageURL": "concussivepadding.webp",
+    "tier": "b",
+    "index": 25,
+    "description": "Provides 50% resistance to explosive damage.\nProvides 25% resistance to gas damage and effects.\nSidearm recoil reduced by 30%.",
+    "shortDescription": "50% explosive dmg resistance\n25% gas dmg resistance\n-30% sidearm recoil",
+    "abilityTags": [ "explosive-protection", "gas-protection", "sidearm-reload" ]
+  },
+  {
+    "displayName": "Concussive Padding, Reinforced",
+    "type": "Equipment",
+    "category": "armor",
+    "tags": [ "ArmorPassive" ],
+    "warbondCode": "warbond1",
+    "internalName": "concussivepadddingreinforced",
+    "imageURL": "concussivepadding.webp",
+    "tier": "b",
+    "index": 26,
+    "description": "Provides 50% resistance to explosive damage.\nProvides a higher armor rating.",
+    "shortDescription": "50% explosive dmg resistance\nHigher armor rating",
+    "abilityTags": [ "explosive-protection", "ballistic-protection" ]
+  },
+  {
+    "displayName": "Oxygenator",
+    "type": "Equipment",
+    "category": "armor",
+    "tags": [ "ArmorPassive" ],
+    "warbondCode": "exo_experts",
+    "internalName": "oxygenator",
+    "imageURL": "extrapadding.png",
+    "tier": "b",
+    "index": 27,
+    "description": "Increases the wearer's walking speed and running speed.\nIncreases the speed and duration of slides.",
+    "shortDescription": "Increased walk/run speed\nIncreased slide speed and duration",
+    "abilityTags": [ "movement-speed" ]
   }
 ]
