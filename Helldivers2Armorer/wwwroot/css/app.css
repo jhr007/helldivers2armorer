@@ -385,12 +385,15 @@ a:hover { color: #e8c060; text-decoration: underline; }
     background: var(--bg-card-hover);
 }
 .armor-tile.selected {
-    outline: 3px solid var(--gold);
-    border-color: var(--gold);
+    outline: 3px solid #e8c060;
+    border-color: #e8c060;
+    background: #1c1a10;
+    box-shadow: 0 0 12px rgba(232, 192, 96, 0.2);
 }
 .armor-tile.selected:hover {
-    outline-color: #e8c060;
-    border-color: #e8c060;
+    outline-color: #f0cc70;
+    border-color: #f0cc70;
+    background: #201e14;
 }
 
 .armor-img-wrap {

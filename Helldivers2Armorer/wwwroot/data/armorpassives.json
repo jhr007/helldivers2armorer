@@ -81,7 +81,7 @@
     "index": 5,
     "description": "Provides a higher armor rating.",
     "shortDescription": "Higher armor rating",
-    "abilityTags": [ "ballistic-protection" ]
+    "abilityTags": [ "armor-bonus" ]
   },
   {
     "displayName": "Fortified",
@@ -179,7 +179,7 @@
     "index": 12,
     "description": "Helps prevent Helldivers from flinching when hit.\nProvides a higher armor rating.\nMarkers placed on the map will generate radar scans every 2.0s.",
     "shortDescription": "Flinch prevention\nHigher armor rating\nRadar scans every 2s",
-    "abilityTags": [ "stagger-resistance" ]
+    "abilityTags": [ "stagger-resistance", "armor-bonus" ]
   },
   {
     "displayName": "Siege Ready",
@@ -207,7 +207,7 @@
     "index": 14,
     "description": "Armor explodes 1.5s after the wearer dies.\nIncreases initial inventory and holding capacity of throwables by +2.",
     "shortDescription": "Armor explodes on death\n+2 throwables",
-    "abilityTags": [ "explosive-protection", "bonus-throwables" ]
+    "abilityTags": [ "death-explosion", "bonus-throwables" ]
   },
   {
     "displayName": "Gunslinger",
@@ -249,7 +249,7 @@
     "index": 17,
     "description": "Provides 25% resistance to chest damage.\nProvides 25% resistance to explosive damage.\nPrevents all damage from bleeding if chest hemorrhages.",
     "shortDescription": "25% chest dmg resistance\n25% explosive dmg resistance\nNo bleed on chest hemorrhage",
-    "abilityTags": [ "ballistic-protection" ]
+    "abilityTags": [ "armor-bonus" ]
   },
   {
     "displayName": "Adreno-Defibrillator",
@@ -277,7 +277,7 @@
     "index": 19,
     "description": "Wearer makes 50% less noise when moving.\nIncreases point-of-interest identification range by 30%.\nProvides immunity to leg injuries.",
     "shortDescription": "-50% movement noise\n+30% POI range\nLeg injury immunity",
-    "abilityTags": [ "dive-bonus" ]
+    "abilityTags": [ "reduced-detection", "poi-range", "limb-protection" ]
   },
   {
     "displayName": "Desert Stormer",
@@ -333,7 +333,7 @@
     "index": 23,
     "description": "When the wearer takes damage, they regain some stamina.\nProvides a higher armor rating.",
     "shortDescription": "Stamina regain on damage\nHigher armor rating",
-    "abilityTags": [ "stamina-bonus" ]
+    "abilityTags": [ "stamina-bonus", "armor-bonus" ]
   },
   {
     "displayName": "Concussive Padding",
@@ -375,7 +375,7 @@
     "index": 26,
     "description": "Provides 50% resistance to explosive damage.\nProvides a higher armor rating.",
     "shortDescription": "50% explosive dmg resistance\nHigher armor rating",
-    "abilityTags": [ "explosive-protection", "ballistic-protection" ]
+    "abilityTags": [ "explosive-protection", "armor-bonus" ]
   },
   {
     "displayName": "Oxygenator",

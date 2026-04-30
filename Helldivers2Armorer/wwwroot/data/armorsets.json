@@ -1653,7 +1653,7 @@
     "imageURL": "rs6fienddestroyer.webp",
     "tier": "b",
     "index": 91,
-    "sortOrder": 9080
+    "sortOrder": 240
   },
   {
     "displayName": "RS-89 Shadow Paragon",
@@ -1761,7 +1761,7 @@
     "imageURL": "dp8mountainscaled.webp",
     "tier": "b",
     "index": 97,
-    "sortOrder": 9090
+    "sortOrder": 145
   },
   {
     "displayName": "CPG-48 Sapper",
@@ -1831,7 +1831,7 @@
     "imageURL": "o3freespirit.png",
     "tier": "b",
     "index": 101,
-    "sortOrder": 9090
+    "sortOrder": 215
   },
   {
     "displayName": "O-44 Bonded Pilot",
