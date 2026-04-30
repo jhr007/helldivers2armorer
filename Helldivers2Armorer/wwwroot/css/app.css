@@ -522,6 +522,15 @@ a:hover { color: #e8c060; text-decoration: underline; }
     padding: 4rem 0;
 }
 
+/* ── Unsorted page ──────────────────────────────────────────────────────── */
+.unsorted-hint {
+    color: var(--text-dim);
+    font-size: 0.875rem;
+    padding: 1.5rem 1rem 2rem;
+    max-width: 680px;
+}
+.unsorted-hint a { color: var(--gold); }
+
 /* ── Loading ────────────────────────────────────────────────────────────── */
 .loading-state {
     display: flex;

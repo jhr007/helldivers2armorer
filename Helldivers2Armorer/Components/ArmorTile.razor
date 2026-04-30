@@ -1,0 +1,67 @@
+<div class="armor-tile @(Selected ? "selected" : "")" @onclick="OnClick">
+    <div class="armor-img-wrap">
+        <img class="armor-img" src="images/armor/@Armor.ImageURL" alt="@Armor.DisplayName" loading="lazy" />
+    </div>
+    <div class="armor-info">
+        <div class="armor-name">@Armor.DisplayName</div>
+        <div class="armor-passive" @onclick="HandlePassiveClick" @onclick:stopPropagation="true">
+            @if (Armor.PassiveInfo is { } p)
+            {
+                <img src="images/armorpassives/@p.ImageURL" class="passive-icon" alt="" />
+            }
+            <span class="passive-name">@Armor.Passive</span>
+        </div>
+        <div class="armor-stats">
+            <span class="stat">
+                <span class="stat-label">AR</span>
+                <span class="stat-val @ArC">@Armor.ArmorRating</span>
+            </span>
+            <span class="stat">
+                <span class="stat-label">SPD</span>
+                <span class="stat-val @SpdC">@Armor.Speed</span>
+            </span>
+            <span class="stat">
+                <span class="stat-label">STA</span>
+                <span class="stat-val @StaC">@Armor.Stamina</span>
+            </span>
+        </div>
+        @if (Armor.PassiveInfo?.AbilityTags is { Count: > 0 } tags)
+        {
+            <div class="feature-tags">
+                @foreach (var tag in tags)
+                {
+                    <span class="feature-tag" @onclick="() => OnTagClick.InvokeAsync(tag)" @onclick:stopPropagation="true">@FormatTag(tag)</span>
+                }
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Armor.PassiveInfo?.ShortDescription))
+        {
+            <div class="passive-desc-br">@((MarkupString)Armor.PassiveInfo!.ShortDescription.Replace("\n", "<br/>"))</div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ArmorSet Armor { get; set; } = default!;
+    [Parameter] public bool Selected { get; set; }
+    [Parameter] public EventCallback OnClick { get; set; }
+    [Parameter] public EventCallback<string> OnPassiveClick { get; set; }
+    [Parameter] public EventCallback<string> OnTagClick { get; set; }
+
+    private static readonly Dictionary<string, (int AR, int Speed, int Stamina)> WeightDefaults = new()
+    {
+        ["Light"]  = (50,  550, 125),
+        ["Medium"] = (100, 500, 100),
+        ["Heavy"]  = (150, 450,  50),
+    };
+
+    private (int AR, int Speed, int Stamina) Def => WeightDefaults.GetValueOrDefault(Armor.WeightClass);
+    private string ArC  => Armor.ArmorRating > Def.AR      ? "stat-high" : Armor.ArmorRating < Def.AR      ? "stat-low" : "";
+    private string SpdC => Armor.Speed       > Def.Speed   ? "stat-high" : Armor.Speed       < Def.Speed   ? "stat-low" : "";
+    private string StaC => Armor.Stamina     > Def.Stamina ? "stat-high" : Armor.Stamina     < Def.Stamina ? "stat-low" : "";
+
+    private Task HandlePassiveClick() => OnPassiveClick.InvokeAsync(Armor.Passive);
+
+    private static string FormatTag(string tag) =>
+        string.Join(" ", tag.Split('-').Select(w => char.ToUpper(w[0]) + w[1..]));
+}

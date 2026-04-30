@@ -1,0 +1,69 @@
+@page "/unsorted"
+@inject ArmorDataService Data
+
+<PageTitle>Unsorted Armor — HD2 Armorer</PageTitle>
+
+@if (!Data.IsLoaded)
+{
+    <div class="loading-state">
+        <div class="loading-text">Loading Armory...</div>
+    </div>
+}
+else
+{
+    <div class="filter-bar">
+        @if (selectedArmors.Count > 0)
+        {
+            <div class="selection-bar">
+                <span class="selection-count">@selectedArmors.Count selected</span>
+                <button class="clear-all" @onclick="() => selectedArmors.Clear()">Clear selections</button>
+            </div>
+        }
+    </div>
+
+    var unsorted = Data.ArmorSets.Where(a => a.SortOrder >= 9000).ToList();
+
+    @foreach (var weightClass in new[] { "Light", "Medium", "Heavy" })
+    {
+        var group = unsorted.Where(a => a.WeightClass == weightClass).OrderBy(a => a.DisplayName).ToList();
+        if (group.Count > 0)
+        {
+            <section class="weight-section">
+                <h2 class="weight-heading @weightClass.ToLower()">@weightClass</h2>
+                <div class="armor-grid">
+                    @foreach (var armor in group)
+                    {
+                        <ArmorTile Armor="armor"
+                                   Selected="selectedArmors.Contains(armor.InternalName)"
+                                   OnClick="() => ToggleSelection(armor.InternalName)" />
+                    }
+                </div>
+            </section>
+        }
+    }
+
+    if (unsorted.Count == 0)
+    {
+        <div class="no-results">All armor sort orders are known.</div>
+    }
+    else
+    {
+        <p class="unsorted-hint">
+            These armor sets don't have a recorded in-game sort position.
+            If you own any, check where they appear in the in-game armory and
+            <a href="https://github.com/jhr007/helldivers2armorer/issues" target="_blank" rel="noopener">open an issue</a>
+            with the position so it can be updated.
+        </p>
+    }
+}
+
+@code {
+    private HashSet<string> selectedArmors = [];
+
+    protected override async Task OnInitializedAsync() => await Data.LoadAsync();
+
+    private void ToggleSelection(string internalName)
+    {
+        if (!selectedArmors.Remove(internalName)) selectedArmors.Add(internalName);
+    }
+}

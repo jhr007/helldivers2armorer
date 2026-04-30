@@ -67,9 +67,9 @@ else
                 @foreach (var passive in activePassives)
                 {
                     <span class="filter-pill passive-pill">
-                        @if (Data.PassiveIconMap.TryGetValue(passive, out var icon))
+                        @if (Data.PassiveMap.TryGetValue(passive, out var pd))
                         {
-                            <img src="images/armorpassives/@icon" class="pill-icon" alt="" />
+                            <img src="images/armorpassives/@pd.ImageURL" class="pill-icon" alt="" />
                         }
                         @passive
                         <button class="pill-remove" @onclick="() => RemovePassive(passive)" aria-label="Remove">×</button>
@@ -102,9 +102,9 @@ else
         filtered = filtered.Where(a =>
             a.DisplayName.Contains(s, StringComparison.OrdinalIgnoreCase) ||
             a.Passive.Contains(s, StringComparison.OrdinalIgnoreCase) ||
-            (Data.FeatureTags.TryGetValue(a.Passive, out var ftags) &&
-             ftags.Any(t => t.Contains(s, StringComparison.OrdinalIgnoreCase) ||
-                            FormatTag(t).Contains(s, StringComparison.OrdinalIgnoreCase)))
+            (a.PassiveInfo?.AbilityTags.Any(t =>
+                t.Contains(s, StringComparison.OrdinalIgnoreCase) ||
+                FormatTag(t).Contains(s, StringComparison.OrdinalIgnoreCase)) == true)
         ).ToList();
     }
 
@@ -118,52 +118,11 @@ else
                 <div class="armor-grid">
                     @foreach (var armor in group)
                     {
-                        var def  = WeightDefaults.GetValueOrDefault(armor.WeightClass);
-                        var arC  = armor.ArmorRating > def.AR       ? "stat-high" : armor.ArmorRating < def.AR       ? "stat-low" : "";
-                        var spdC = armor.Speed       > def.Speed    ? "stat-high" : armor.Speed       < def.Speed    ? "stat-low" : "";
-                        var staC = armor.Stamina     > def.Stamina  ? "stat-high" : armor.Stamina     < def.Stamina  ? "stat-low" : "";
-                        <div class="armor-tile @(selectedArmors.Contains(armor.InternalName) ? "selected" : "")" @onclick="() => ToggleSelection(armor.InternalName)">
-                            <div class="armor-img-wrap">
-                                <img class="armor-img" src="images/armor/@armor.ImageURL" alt="@armor.DisplayName" loading="lazy" />
-                            </div>
-                            <div class="armor-info">
-                                <div class="armor-name">@armor.DisplayName</div>
-                                <div class="armor-passive" @onclick="() => SelectPassive(armor.Passive)" @onclick:stopPropagation="true">
-                                    @if (Data.PassiveIconMap.TryGetValue(armor.Passive, out var pIcon))
-                                    {
-                                        <img src="images/armorpassives/@pIcon" class="passive-icon" alt="" />
-                                    }
-                                    <span class="passive-name">@armor.Passive</span>
-                                </div>
-                                <div class="armor-stats">
-                                    <span class="stat">
-                                        <span class="stat-label">AR</span>
-                                        <span class="stat-val @arC">@armor.ArmorRating</span>
-                                    </span>
-                                    <span class="stat">
-                                        <span class="stat-label">SPD</span>
-                                        <span class="stat-val @spdC">@armor.Speed</span>
-                                    </span>
-                                    <span class="stat">
-                                        <span class="stat-label">STA</span>
-                                        <span class="stat-val @staC">@armor.Stamina</span>
-                                    </span>
-                                </div>
-                                @if (Data.FeatureTags.TryGetValue(armor.Passive, out var tags))
-                                {
-                                    <div class="feature-tags">
-                                        @foreach (var tag in tags)
-                                        {
-                                            <span class="feature-tag" @onclick="() => activeFeatureTags.Add(tag)" @onclick:stopPropagation="true">@FormatTag(tag)</span>
-                                        }
-                                    </div>
-                                }
-                                @if (Data.PassiveMap.TryGetValue(armor.Passive, out var passiveInfo) && !string.IsNullOrEmpty(passiveInfo.ShortDescription))
-                                {
-                                    <div class="passive-desc-br">@((MarkupString)passiveInfo.ShortDescription.Replace("\n", "<br/>"))</div>
-                                }
-                            </div>
-                        </div>
+                        <ArmorTile Armor="armor"
+                                   Selected="selectedArmors.Contains(armor.InternalName)"
+                                   OnClick="() => ToggleSelection(armor.InternalName)"
+                                   OnPassiveClick="SelectPassive"
+                                   OnTagClick="tag => activeFeatureTags.Add(tag)" />
                     }
                 </div>
             </section>
@@ -183,13 +142,6 @@ else
     private string selectedFeature = "";
     private string searchText = "";
     private bool passiveDropdownOpen = false;
-
-    private static readonly Dictionary<string, (int AR, int Speed, int Stamina)> WeightDefaults = new()
-    {
-        ["Light"]  = (50,  550, 125),
-        ["Medium"] = (100, 500, 100),
-        ["Heavy"]  = (150, 450,  50),
-    };
 
     protected override async Task OnInitializedAsync() => await Data.LoadAsync();
 

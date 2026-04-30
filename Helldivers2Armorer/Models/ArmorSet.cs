@@ -32,4 +32,7 @@ public record ArmorSet
     public int SortOrder { get; init; }
 
     public string WeightClass => Tags.FirstOrDefault(t => t is "Light" or "Medium" or "Heavy") ?? "Unknown";
+
+    [JsonIgnore]
+    public ArmorPassive? PassiveInfo { get; init; }
 }

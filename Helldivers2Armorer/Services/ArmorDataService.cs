@@ -11,9 +11,7 @@ public class ArmorDataService(HttpClient http)
     public List<ArmorSet> ArmorSets { get; private set; } = [];
     public List<ArmorPassive> Passives { get; private set; } = [];
     public Dictionary<string, ArmorPassive> PassiveMap { get; private set; } = [];
-    public Dictionary<string, List<string>> FeatureTags { get; private set; } = [];
     public IReadOnlyList<string> AllFeatureTags { get; private set; } = [];
-    public Dictionary<string, string> PassiveIconMap { get; private set; } = [];
     public bool IsLoaded { get; private set; }
 
     public async Task LoadAsync()
@@ -22,9 +20,8 @@ public class ArmorDataService(HttpClient http)
         ArmorSets = await http.GetFromJsonAsync<List<ArmorSet>>("data/armorsets.json", Opts) ?? [];
         Passives = await http.GetFromJsonAsync<List<ArmorPassive>>("data/armorpassives.json", Opts) ?? [];
         PassiveMap = Passives.ToDictionary(p => p.DisplayName);
-        FeatureTags = Passives.ToDictionary(p => p.DisplayName, p => p.AbilityTags);
         AllFeatureTags = Passives.SelectMany(p => p.AbilityTags).Distinct().OrderBy(x => x).ToList();
-        PassiveIconMap = Passives.ToDictionary(p => p.DisplayName, p => p.ImageURL);
+        ArmorSets = ArmorSets.Select(a => a with { PassiveInfo = PassiveMap.GetValueOrDefault(a.Passive) }).ToList();
         IsLoaded = true;
     }
 
@@ -33,7 +30,7 @@ public class ArmorDataService(HttpClient http)
         return ArmorSets.Where(a =>
             (passives.Count == 0 || passives.Contains(a.Passive)) &&
             (featureTags.Count == 0 || featureTags.All(tag =>
-                FeatureTags.TryGetValue(a.Passive, out var tags) && tags.Contains(tag)))
+                a.PassiveInfo?.AbilityTags.Contains(tag) == true))
         ).ToList();
     }
 }
