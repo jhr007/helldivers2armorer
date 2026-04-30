@@ -19,7 +19,7 @@ else
     <div class="filter-bar">
         <div class="filter-controls">
             <div class="search-wrap">
-                <input class="search-input" type="text" placeholder="Search armor, passive, or tag..."
+                <input class="search-input" type="text" placeholder="Search armor, passive, tag, or description..."
                        @bind="searchText" @bind:event="oninput" />
                 @if (!string.IsNullOrEmpty(searchText))
                 {
@@ -102,6 +102,7 @@ else
         filtered = filtered.Where(a =>
             a.DisplayName.Contains(s, StringComparison.OrdinalIgnoreCase) ||
             a.Passive.Contains(s, StringComparison.OrdinalIgnoreCase) ||
+            (a.PassiveInfo?.Description.Contains(s, StringComparison.OrdinalIgnoreCase) == true) ||
             (a.PassiveInfo?.AbilityTags.Any(t =>
                 t.Contains(s, StringComparison.OrdinalIgnoreCase) ||
                 FormatTag(t).Contains(s, StringComparison.OrdinalIgnoreCase)) == true)
