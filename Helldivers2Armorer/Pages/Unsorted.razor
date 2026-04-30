@@ -11,17 +11,22 @@
 }
 else
 {
-    <div class="filter-bar">
-        @if (selectedArmors.Count > 0)
-        {
-            <div class="selection-bar">
-                <span class="selection-count">@selectedArmors.Count selected</span>
-                <button class="clear-all" @onclick="() => selectedArmors.Clear()">Clear selections</button>
-            </div>
-        }
-    </div>
-
     var unsorted = Data.ArmorSets.Where(a => a.SortOrder >= 9000).ToList();
+
+    @if (unsorted.Count == 0)
+    {
+        <div class="no-results">All armor sort orders are known.</div>
+    }
+    else
+    {
+        <p class="unsorted-hint">
+            These armor sets don't have a recorded in-game sort position and appear at the bottom of their weight class.
+            If you own any, open the in-game armory and note the armor immediately <strong>before</strong> and
+            immediately <strong>after</strong> it in the list, then
+            <a href="https://github.com/jhr007/helldivers2armorer/issues" target="_blank" rel="noopener">open an issue</a>
+            with those neighbors so the sort order can be placed correctly.
+        </p>
+    }
 
     @foreach (var weightClass in new[] { "Light", "Medium", "Heavy" })
     {
@@ -33,37 +38,14 @@ else
                 <div class="armor-grid">
                     @foreach (var armor in group)
                     {
-                        <ArmorTile Armor="armor"
-                                   Selected="selectedArmors.Contains(armor.InternalName)"
-                                   OnClick="() => ToggleSelection(armor.InternalName)" />
+                        <ArmorTile Armor="armor" />
                     }
                 </div>
             </section>
         }
     }
-
-    if (unsorted.Count == 0)
-    {
-        <div class="no-results">All armor sort orders are known.</div>
-    }
-    else
-    {
-        <p class="unsorted-hint">
-            These armor sets don't have a recorded in-game sort position.
-            If you own any, check where they appear in the in-game armory and
-            <a href="https://github.com/jhr007/helldivers2armorer/issues" target="_blank" rel="noopener">open an issue</a>
-            with the position so it can be updated.
-        </p>
-    }
 }
 
 @code {
-    private HashSet<string> selectedArmors = [];
-
     protected override async Task OnInitializedAsync() => await Data.LoadAsync();
-
-    private void ToggleSelection(string internalName)
-    {
-        if (!selectedArmors.Remove(internalName)) selectedArmors.Add(internalName);
-    }
 }
