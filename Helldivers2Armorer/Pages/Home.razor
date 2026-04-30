@@ -161,7 +161,6 @@ else
                                 @if (Data.PassiveMap.TryGetValue(armor.Passive, out var passiveInfo) && !string.IsNullOrEmpty(passiveInfo.ShortDescription))
                                 {
                                     <div class="passive-desc-br">@((MarkupString)passiveInfo.ShortDescription.Replace("\n", "<br/>"))</div>
-                                    <pre class="passive-desc-pre">@passiveInfo.ShortDescription</pre>
                                 }
                             </div>
                         </div>

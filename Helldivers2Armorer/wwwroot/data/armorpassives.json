@@ -25,7 +25,7 @@
     "index": 1,
     "description": "Provides 50% resistance to fire, gas, acid, and electrical damage.",
     "shortDescription": "50% fire/gas/acid/electrical dmg",
-    "abilityTags": [ "fire-protection", "gas-protection", "electrical-protection", "environmental-protection" ]
+    "abilityTags": [ "fire-protection", "gas-protection", "acid-protection", "electrical-protection", "environmental-protection" ]
   },
   {
     "displayName": "Democracy Protects",
@@ -291,7 +291,7 @@
     "index": 20,
     "description": "Provides 40% resistance to fire, gas, acid, and electrical damage.\nIncreases throwing range by 20%.",
     "shortDescription": "40% fire/gas/acid/electrical dmg\n+20% throwing range",
-    "abilityTags": [ "fire-protection", "gas-protection", "electrical-protection", "throwing-range", "environmental-protection" ]
+    "abilityTags": [ "fire-protection", "gas-protection", "acid-protection", "electrical-protection", "throwing-range", "environmental-protection" ]
   },
   {
     "displayName": "Rock Solid",

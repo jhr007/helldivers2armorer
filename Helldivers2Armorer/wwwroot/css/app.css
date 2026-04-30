@@ -396,17 +396,16 @@ a:hover { color: #e8c060; text-decoration: underline; }
 .armor-img-wrap {
     background: #0d0e12;
     width: 110px;
-    height: stretch;
     flex-shrink: 0;
-    align-self: center;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
 }
 .armor-img {
-    height: 150px;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
