@@ -44,6 +44,8 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 - TR-62 Knight
 
 ## Someday / Nice to Have
+
+- **Owned armor tracking** — let users mark which armors they own; hide unowned via a checkbox in the filter bar. Persist the owned set in `localStorage` so it survives page reloads. Surface in the About page that this data is stored locally in the browser. UX on the tile: a `...` menu button to toggle owned/hidden status without navigating away. Filter checkbox: "Hide unowned".
 - **Tile selection UX** — clicking a tile to select it sets user expectations that something will happen (e.g. compare two armors side-by-side, view a detail panel). Currently selection has no payoff. Either add a comparison feature or remove tile selection.
   - Idea: select 2 armors → show a comparison panel highlighting stat differences
 
