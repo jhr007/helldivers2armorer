@@ -1,41 +1,16 @@
 @page "/about"
-@inject ArmorDataService Data
 
 <PageTitle>About — HD2 Armorer</PageTitle>
 
 <div class="about-page">
     <h1 class="about-heading">About</h1>
 
-    @if (Data.IsLoaded)
-    {
-        var unsorted = Data.ArmorSets.Where(a => a.SortOrder >= 9000).ToList();
-        if (unsorted.Count > 0)
-        {
-            <section class="about-section">
-                <h2>Unsorted Armor</h2>
-                <p>
-                    The following armor sets don't have an in-game sort position recorded yet and appear at the bottom of their weight class.
-                    If you own any of these, check where they fall in the in-game armory and
-                    <a href="https://github.com/jhr007/helldivers2armorer/issues" target="_blank" rel="noopener">open an issue</a>
-                    with the position so the <code>sortOrder</code> can be updated.
-                </p>
-                @foreach (var weightClass in new[] { "Light", "Medium", "Heavy" })
-                {
-                    var group = unsorted.Where(a => a.WeightClass == weightClass).OrderBy(a => a.DisplayName).ToList();
-                    if (group.Count > 0)
-                    {
-                        <h3 class="unsorted-weight @weightClass.ToLower()">@weightClass</h3>
-                        <ul>
-                            @foreach (var armor in group)
-                            {
-                                <li>@armor.DisplayName</li>
-                            }
-                        </ul>
-                    }
-                }
-            </section>
-        }
-    }
+    <section class="about-section">
+        <p>
+            I wanted a quick way to find armor that protects against fire — or gas, acid, or explosives —
+            without clicking through every piece in the game. This is that tool.
+        </p>
+    </section>
 
     <section class="about-section">
         <h2>Credits</h2>
@@ -64,7 +39,3 @@
         </ul>
     </section>
 </div>
-
-@code {
-    protected override async Task OnInitializedAsync() => await Data.LoadAsync();
-}

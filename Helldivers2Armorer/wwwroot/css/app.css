@@ -109,6 +109,13 @@ a:hover { color: #e8c060; text-decoration: underline; }
 }
 .header-nav .nav-link:hover { color: var(--text); text-decoration: none; }
 .header-nav .nav-link.active { color: var(--gold); border-bottom-color: var(--gold); }
+.nav-version {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    opacity: 0.6;
+    align-self: center;
+}
 
 /* ── Filter Bar ─────────────────────────────────────────────────────────── */
 .filter-bar {
@@ -527,12 +534,38 @@ a:hover { color: #e8c060; text-decoration: underline; }
 
 /* ── Unsorted page ──────────────────────────────────────────────────────── */
 .unsorted-hint {
-    color: var(--text-dim);
-    font-size: 0.875rem;
+    color: var(--text);
+    font-size: 1.1rem;
+    line-height: 1.5;
     padding: 1.5rem 1rem 2rem;
     max-width: 680px;
 }
+.unsorted-hint p { margin-bottom: 0.5em; }
+.unsorted-hint ol { padding-left: 1.5em; margin-top: 0.25em; }
+.unsorted-hint li { margin-bottom: 0.4em; }
 .unsorted-hint a { color: var(--gold); }
+
+/* ── Unsorted tile banner ───────────────────────────────────────────────── */
+.unsorted-banner {
+    display: block;
+    margin-top: auto;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    font-family: var(--font-head);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #c8a820;
+    background: rgba(200, 168, 32, 0.1);
+    border: 1px solid rgba(200, 168, 32, 0.4);
+    border-radius: 2px;
+    text-decoration: none;
+    text-align: center;
+}
+.unsorted-banner:hover {
+    background: rgba(200, 168, 32, 0.18);
+    color: #e0bc30;
+    text-decoration: none;
+}
 
 /* ── Loading ────────────────────────────────────────────────────────────── */
 .loading-state {

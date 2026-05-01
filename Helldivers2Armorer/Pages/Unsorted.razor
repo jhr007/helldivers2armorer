@@ -19,13 +19,15 @@ else
     }
     else
     {
-        <p class="unsorted-hint">
-            These armor sets don't have a recorded in-game sort position and appear at the bottom of their weight class.
-            If you own any, open the in-game armory and note the armor immediately <strong>before</strong> and
-            immediately <strong>after</strong> it in the list, then
-            <a href="https://github.com/jhr007/helldivers2armorer/issues" target="_blank" rel="noopener">open an issue</a>
-            with those neighbors so the sort order can be placed correctly.
-        </p>
+        <div class="unsorted-hint">
+            <p>These armor sets don't have a recorded in-game sort position and appear at the bottom of their weight class.</p>
+            <p>If you own any:</p>
+            <ol>
+                <li>Open the in-game armory and find the armor.</li>
+                <li>Note the <strong>two armors before it</strong> and the <strong>two armors after it</strong> in the list.</li>
+                <li><a href="https://github.com/jhr007/helldivers2armorer/issues" target="_blank" rel="noopener">Open an issue</a> with those neighbors so the sort order can be placed correctly.</li>
+            </ol>
+        </div>
     }
 
     @foreach (var weightClass in new[] { "Light", "Medium", "Heavy" })

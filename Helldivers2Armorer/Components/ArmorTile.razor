@@ -38,6 +38,10 @@
         {
             <div class="passive-desc-br">@((MarkupString)Armor.PassiveInfo!.ShortDescription.Replace("\n", "<br/>"))</div>
         }
+        @if (Armor.SortOrder >= 9000)
+        {
+            <a class="unsorted-banner" href="unsorted" @onclick:stopPropagation="true">Sort position unknown</a>
+        }
     </div>
 </div>
 
