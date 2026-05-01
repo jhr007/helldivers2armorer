@@ -4,7 +4,9 @@
 _nothing yet_
 
 ## Planned
-- ~~Set up GitLab CI pipeline (build, mirror to GitHub, push to gh-pages)~~ — done
+- [x] Set up GitLab CI pipeline (build, mirror to GitHub, push to gh-pages)
+- [x] Dynamic base path — served correctly for GitHub Pages (`/helldivers2armorer/`) and Docker (`/`)
+- [x] Live text filter — searches armor name, passive, description, and feature tags; live on keystroke with X to clear
 - Set up GitLab → GitHub repository mirroring
 
 ## Sort Order — Unowned Armors
@@ -45,20 +47,27 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 
 ## Someday / Nice to Have
 
-- **Owned armor tracking** — let users mark which armors they own; hide unowned via a checkbox in the filter bar. Persist the owned set in `localStorage` so it survives page reloads. Surface in the About page that this data is stored locally in the browser. UX on the tile: a `...` menu button to toggle owned/hidden status without navigating away. Filter checkbox: "Hide unowned".
-- **Tile selection UX** — clicking a tile to select it sets user expectations that something will happen (e.g. compare two armors side-by-side, view a detail panel). Currently selection has no payoff. Either add a comparison feature or remove tile selection.
+- **Owned armor tracking** — let users mark which armors they own; persist in `localStorage`; surface in About that this is stored locally in the browser.
+  - [ ] Checkbox on each tile for mass-editing; checkbox column toggled on/off via a filter bar control
+  - [ ] `...` tile menu: toggle owned status; link to the armor's wiki page
+  - [ ] Filter bar checkbox: "Hide unowned"
+
+- **Armor info expander** — popup/panel triggered from the `...` tile menu showing additional armor detail (e.g. full passive description, acquisition source) without affecting tile layout or grid spacing.
+
+- **Duplicate armor sets** — identify and surface armor sets that share identical AR/Speed/Stamina/Passive combinations so users can spot redundant choices.
+
+- **Images and attribution**
+  - [ ] Add image creator credits and license/usage details to the About page for all sourced assets
+  - [ ] Update armor renders with higher-quality versions from [Helldivers Wiki](https://helldivers.wiki.gg/wiki/Helldivers_2); images live in `Helldivers2Armorer/wwwroot/images/armor/`
+  - [ ] Resolve placeholder passive icons — two icons carry a "wiki-use only" restriction from creator [User:Dogo314](https://helldivers.wiki.gg/wiki/User:Dogo314); need alternatives (game file extraction or permission request):
+    - `Acclimated` — using `inflammable.png`; proper icon: [`Acclimated_Armor_Passive_Icon.svg`](https://helldivers.wiki.gg/wiki/File:Acclimated_Armor_Passive_Icon.svg)
+    - `Oxygenator` — using `extrapadding.png`; proper icon: [`Oxygenator_Armor_Passive_Icon.svg`](https://helldivers.wiki.gg/wiki/File:Oxygenator_Armor_Passive_Icon.svg)
+
+- **Tile selection UX** — clicking a tile to select it sets user expectations that something will happen. Either add a comparison feature or remove tile selection.
   - Idea: select 2 armors → show a comparison panel highlighting stat differences
 
-- **Update armor images from wiki** — replace current images with higher-quality versions from [Helldivers Wiki](https://helldivers.wiki.gg/wiki/Helldivers_2); images live in `Helldivers2Armorer/wwwroot/images/armor/`
-- **Missing passive icons** — two passive icons are placeholders; the wiki icons have a "wiki-use only" restriction from their creator (User:Dogo314), so alternatives are needed (game file extraction or permission request):
-  - `Acclimated` — currently using `inflammable.png`; proper icon: [`Acclimated_Armor_Passive_Icon.svg`](https://helldivers.wiki.gg/wiki/File:Acclimated_Armor_Passive_Icon.svg)
-  - `Oxygenator` — currently using `extrapadding.png`; proper icon: [`Oxygenator_Armor_Passive_Icon.svg`](https://helldivers.wiki.gg/wiki/File:Oxygenator_Armor_Passive_Icon.svg)
-
-
-- **Switch data source to [helldivers-2/json](https://github.com/helldivers-2/json)** — community-maintained JSON API; evaluate schema compatibility before migrating
-- **Dynamic base path at runtime** — serve a `config.json` from the container with the base path, read it before Blazor initializes. Currently hardcoded to `/`; two publish targets (`--pathbase`) handle GitHub Pages vs Docker. See ADR-002.
-- ~~**Live text filter**~~ — done: searches armor name, passive, and feature tags; live on keystroke with X to clear
 - **Wiki source link per armor** — show where to acquire each armor piece (warbond, premium, etc.). The [Helldivers Wiki](https://helldivers.wiki.gg/wiki/Helldivers_2) is the reference source.
-- **Armor acquisition source** — display warbond/source on each tile so users know if they own or can get the armor
-- **Matching helmet/cape** — helmets and capes aren't grouped by armor set in the source data; would require a manual mapping or a richer data source
 
+- **Armor acquisition source** — display warbond/source on each tile so users know if they own or can get the armor.
+
+- **Matching helmet/cape** — helmets and capes aren't grouped by armor set in the source data; would require a manual mapping or a richer data source.

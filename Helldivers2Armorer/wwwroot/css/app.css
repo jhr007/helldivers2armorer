@@ -606,7 +606,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
 .about-section {
     margin-bottom: 2rem;
 }
-.about-section h2 {
+.about-section h3 {
     font-family: var(--font-head);
     font-size: 1.1rem;
     font-weight: 600;
