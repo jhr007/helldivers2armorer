@@ -54,7 +54,9 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
 
 - **Armor info expander** — popup/panel triggered from the `...` tile menu showing additional armor detail (e.g. full passive description, acquisition source) without affecting tile layout or grid spacing.
 
-- **Duplicate armor sets** — identify and surface armor sets that share identical AR/Speed/Stamina/Passive combinations so users can spot redundant choices.
+- **B-01 Tactical duplicate skins** — the B-01 Tactical armor has 3 variants with different skins but identical stats; all three need to be added as separate entries so they can be matched to the correct in-game sort position. Currently only one entry exists which makes sort-order placement ambiguous.
+
+- **Collapsible weight sections** — allow Light / Medium / Heavy sections on the home page to be collapsed/expanded so users can focus on one weight class at a time.
 
 - **Images and attribution**
   - [ ] Add image creator credits and license/usage details to the About page for all sourced assets
