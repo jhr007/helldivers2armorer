@@ -28,7 +28,7 @@
 
 @code {
     private static readonly string Version =
-        typeof(MainLayout).Assembly
+        (typeof(MainLayout).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            ?.InformationalVersion ?? "";
+            ?.InformationalVersion ?? "").Split('+')[0];
 }
