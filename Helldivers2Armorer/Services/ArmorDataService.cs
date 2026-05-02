@@ -16,12 +16,15 @@ public class ArmorDataService(HttpClient http)
 
     public async Task LoadAsync()
     {
-        if (IsLoaded) return;
+        if (IsLoaded) 
+            return;
+
         ArmorSets = await http.GetFromJsonAsync<List<ArmorSet>>("data/armorsets.json", Opts) ?? [];
         Passives = await http.GetFromJsonAsync<List<ArmorPassive>>("data/armorpassives.json", Opts) ?? [];
         PassiveMap = Passives.ToDictionary(p => p.DisplayName);
         AllFeatureTags = Passives.SelectMany(p => p.AbilityTags).Distinct().OrderBy(x => x).ToList();
         ArmorSets = ArmorSets.Select(a => a with { PassiveInfo = PassiveMap.GetValueOrDefault(a.Passive) }).ToList();
+        
         IsLoaded = true;
     }
 

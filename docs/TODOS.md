@@ -7,43 +7,8 @@ _nothing yet_
 - [x] Set up GitLab CI pipeline (build, mirror to GitHub, push to gh-pages)
 - [x] Dynamic base path — served correctly for GitHub Pages (`/helldivers2armorer/`) and Docker (`/`)
 - [x] Live text filter — searches armor name, passive, description, and feature tags; live on keystroke with X to clear
-- Set up GitLab → GitHub repository mirroring
-
-## Sort Order — Unowned Armors
-Record in-game position for these when acquired and update `sortOrder` in `armorsets.json` (currently parked at 9000+).
-
-**Light**
-- AD-11 Livewire
-- CE-67 Titan
-- DS-10 Big Game Hunter
-- GS-11 Democracy's Deputy
-- O-3 Free Spirit *(new — Exo Experts warbond)*
-- RS-100 Sanctioner
-
-**Medium**
-- AC-1 Dutiful
-- AF-91 Field Chemist
-- CE-81 Juggernaut
-- DP-8 Mountain-Scaled
-- FS-34 Exterminator
-- O-44 Bonded Pilot *(new — Superstore)*
-- RS-6 Fiend Destroyer
-- SA-15 Drone Master
-- TR-7 Ambassador of the Brand
-- TR-9 Cavalier of Democracy
-- UF-84 Doubt Killer
-
-**Heavy**
-- AF-52 Lockdown
-- BP-77 Grand Juror
-- CE-101 Guerilla Gorilla
-- CPR-80 Bulwark
-- FS-11 Executioner
-- FS-61 Dreadnought
-- O-2 Heavy Operator *(new — Exo Experts warbond)*
-- RE-824 Bearer of the Standard
-- SR-64 Cinderblock
-- TR-62 Knight
+  - [ ] Also search `shortDescription` field
+- [x] Set up GitLab → GitHub repository mirroring
 
 ## Someday / Nice to Have
 
@@ -52,7 +17,7 @@ Record in-game position for these when acquired and update `sortOrder` in `armor
   - [ ] `...` tile menu: toggle owned status; link to the armor's wiki page
   - [ ] Filter bar checkbox: "Hide unowned"
 
-- **Armor info expander** — popup/panel triggered from the `...` tile menu showing additional armor detail (e.g. full passive description, acquisition source) without affecting tile layout or grid spacing.
+- **Armor info expander** — popup/panel triggered from the `...` tile menu showing additional armor detail (e.g. full passive description, acquisition source) without affecting tile layout or grid spacing. My just a mouseover icon
 
 - **B-01 Tactical duplicate skins** — the B-01 Tactical armor has 3 variants with different skins but identical stats; all three need to be added as separate entries so they can be matched to the correct in-game sort position. Currently only one entry exists which makes sort-order placement ambiguous.
 
