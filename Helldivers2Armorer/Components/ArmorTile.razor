@@ -1,9 +1,36 @@
-<div class="armor-tile @(Selected ? "selected" : "")" @onclick="OnClick">
+<div class="armor-tile @(Selected ? "selected" : "") @(menuOpen ? "menu-open" : "")" @onclick="HandleTileClick">
     <div class="armor-img-wrap">
+        @if (ShowOwnedBadge)
+        {
+            <button class="owned-badge-btn @(Owned ? "is-owned" : "is-unowned")"
+                    @onclick:stopPropagation="true"
+                    @onclick="() => OnOwnedToggle.InvokeAsync(Armor.InternalName)"
+                    title="@(Owned ? "Owned — click to unmark" : "Not owned — click to mark as owned")"
+                    aria-label="@(Owned ? "Unmark as owned" : "Mark as owned")">
+                <i class="bi @(Owned ? "bi-check-circle-fill" : "bi-circle")"></i>
+            </button>
+        }
         <img class="armor-img" src="images/armor/@Armor.ImageURL" alt="@Armor.DisplayName" loading="lazy" />
     </div>
     <div class="armor-info">
-        <div class="armor-name">@Armor.DisplayName</div>
+        <div class="tile-header">
+            <div class="armor-name">@Armor.DisplayName</div>
+            <div class="tile-menu-wrap" @onclick:stopPropagation="true">
+                <button class="tile-menu-btn" @onclick="ToggleMenu" title="Options" aria-label="More options">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                @if (menuOpen)
+                {
+                    <div class="tile-menu-dropdown">
+                        <button class="tile-menu-item" @onclick="HandleOwnedToggle">
+                            @(Owned ? "⊘ Unmark as owned" : "✓ Mark as owned")
+                        </button>
+                        <ExternalLink Class="tile-menu-item" Href="@WikiUrl"
+                                      @onclick="() => menuOpen = false">View on wiki</ExternalLink>
+                    </div>
+                }
+            </div>
+        </div>
         <div class="armor-passive" @onclick="HandlePassiveClick" @onclick:stopPropagation="true">
             @if (Armor.PassiveInfo is { } p)
             {
@@ -42,15 +69,81 @@
         {
             <a class="unsorted-banner" href="unsorted" @onclick:stopPropagation="true">Sort position unknown</a>
         }
+        <div class="tile-actions">
+            <button class="tile-info-btn" @onclick:stopPropagation="true" @onclick="() => detailOpen = true"
+                    title="View full armor details" aria-label="View armor details">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </div>
     </div>
 </div>
+
+@if (detailOpen)
+{
+    <div class="detail-modal-backdrop" @onclick="() => detailOpen = false">
+        <div class="detail-modal" @onclick:stopPropagation="true">
+            <button class="detail-modal-close" @onclick="() => detailOpen = false" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <div class="detail-modal-body">
+                <div class="detail-img-wrap">
+                    <img src="images/armor/@Armor.ImageURL" alt="@Armor.DisplayName" class="detail-img" />
+                </div>
+                <div class="detail-content">
+                    <div class="detail-name">@Armor.DisplayName</div>
+                    <div class="detail-weight">@Armor.WeightClass Armor</div>
+                    @if (Armor.PassiveInfo is { } pi)
+                    {
+                        <div class="detail-passive-name">@pi.DisplayName</div>
+                        <div class="detail-passive-desc">@((MarkupString)pi.Description.Replace("\n", "<br/>"))</div>
+                    }
+                    <div class="detail-stats">
+                        <span class="detail-stat @ArC"><span class="stat-label">AR</span> @Armor.ArmorRating</span>
+                        <span class="detail-stat @SpdC"><span class="stat-label">SPD</span> @Armor.Speed</span>
+                        <span class="detail-stat @StaC"><span class="stat-label">STA</span> @Armor.Stamina</span>
+                    </div>
+                    @if (Armor.PassiveInfo?.AbilityTags is { Count: > 0 } dtags)
+                    {
+                        <div class="feature-tags">
+                            @foreach (var tag in dtags)
+                            {
+                                <span class="feature-tag">@FormatTag(tag)</span>
+                            }
+                        </div>
+                    }
+                    @if (Armor.WarbondInfo is { } wi)
+                    {
+                        <div class="detail-warbond">
+                            Warbond:
+                            @if (!string.IsNullOrEmpty(wi.WikiUrl))
+                            {
+                                <ExternalLink Href="@wi.WikiUrl">@wi.DisplayName</ExternalLink>
+                            }
+                            else
+                            {
+                                @wi.DisplayName
+                            }
+                        </div>
+                    }
+                    <ExternalLink Class="detail-wiki-link" Href="@WikiUrl">View @Armor.DisplayName on Helldivers Wiki</ExternalLink>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @code {
     [Parameter, EditorRequired] public ArmorSet Armor { get; set; } = default!;
     [Parameter] public bool Selected { get; set; }
+    [Parameter] public bool Owned { get; set; }
+    [Parameter] public bool ShowOwnedBadge { get; set; }
     [Parameter] public EventCallback OnClick { get; set; }
     [Parameter] public EventCallback<string> OnPassiveClick { get; set; }
     [Parameter] public EventCallback<string> OnTagClick { get; set; }
+    [Parameter] public EventCallback<string> OnOwnedToggle { get; set; }
+
+    private bool menuOpen = false;
+    private bool detailOpen = false;
 
     private static readonly Dictionary<string, (int AR, int Speed, int Stamina)> WeightDefaults = new()
     {
@@ -63,6 +156,24 @@
     private string ArC  => Armor.ArmorRating > Def.AR      ? "stat-high" : Armor.ArmorRating < Def.AR      ? "stat-low" : "";
     private string SpdC => Armor.Speed       > Def.Speed   ? "stat-high" : Armor.Speed       < Def.Speed   ? "stat-low" : "";
     private string StaC => Armor.Stamina     > Def.Stamina ? "stat-high" : Armor.Stamina     < Def.Stamina ? "stat-low" : "";
+
+    private string WikiUrl => "https://helldivers.wiki.gg/wiki/" + Armor.DisplayName.Replace(' ', '_');
+
+    private async Task HandleTileClick()
+    {
+        if (menuOpen)
+            menuOpen = false;
+        else
+            await OnClick.InvokeAsync();
+    }
+
+    private void ToggleMenu() => menuOpen = !menuOpen;
+
+    private async Task HandleOwnedToggle()
+    {
+        menuOpen = false;
+        await OnOwnedToggle.InvokeAsync(Armor.InternalName);
+    }
 
     private Task HandlePassiveClick() => OnPassiveClick.InvokeAsync(Armor.Passive);
 

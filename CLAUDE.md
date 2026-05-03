@@ -56,6 +56,16 @@ mcp__memorizer__store(type: "reference", source: "LLM", projectId: "0f98bdfb-b0d
 ### Useful tags
 `architecture`, `reference`, `data`, `feature-tags`, `ci-cd`, `how-to`, `decision`
 
+## Environment
+- **Python:** Not installed — use PowerShell or Bash (Bash tool) for scripting; use PowerShell `ConvertFrom-Json` to query JSON files
+
+## Scripting / JSON Manipulation
+- For non-trivial changes to `wwwroot/data/*.json`, prefer C# scripts in `temp/` over PowerShell/Bash
+- Scripts use top-level statements + `System.Text.Json.Nodes` (no extra packages needed)
+- Run with: `dotnet run temp/<script>.cs` (.NET 10 supports single-file execution)
+- Can use existing model types or `JsonNode`/`JsonArray`/`JsonObject` for dynamic manipulation
+- Examples: `temp/apply-sort-order.cs`, `temp/convert.cs`, `temp/download-images.cs`
+
 ## Tooling
 - **dotnet local tools manifest:** `dotnet-tools.json` at repo root (not `.config/`) — contains GitVersion and Slopwatch
 - **Static assets (fonts):** managed by libman via `Helldivers2Armorer/libman.json` + `Microsoft.Web.LibraryManager.Build` NuGet package; restores automatically on `dotnet build` — no extra CI step needed. Fonts land in `Helldivers2Armorer/wwwroot/fonts/`.

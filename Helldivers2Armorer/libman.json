@@ -23,6 +23,15 @@
         "files/barlow-condensed-latin-600-normal.woff2",
         "files/barlow-condensed-latin-700-normal.woff2"
       ]
+    },
+    {
+      "library": "bootstrap-icons@1.11.3",
+      "destination": "wwwroot/fonts/bootstrap-icons",
+      "files": [
+        "font/bootstrap-icons.min.css",
+        "font/fonts/bootstrap-icons.woff2",
+        "font/fonts/bootstrap-icons.woff"
+      ]
     }
   ]
 }

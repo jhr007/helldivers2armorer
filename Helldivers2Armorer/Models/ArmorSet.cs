@@ -7,8 +7,8 @@ public record ArmorSet
     [JsonPropertyName("displayName")]
     public string DisplayName { get; init; } = "";
 
-    [JsonPropertyName("tags")]
-    public string[] Tags { get; init; } = [];
+    [JsonPropertyName("weightClass")]
+    public string WeightClass { get; init; } = "";
 
     [JsonPropertyName("armorRating")]
     public int ArmorRating { get; init; }
@@ -31,8 +31,12 @@ public record ArmorSet
     [JsonPropertyName("sortOrder")]
     public int SortOrder { get; init; }
 
-    public string WeightClass => Tags.FirstOrDefault(t => t is "Light" or "Medium" or "Heavy") ?? "Unknown";
+    [JsonPropertyName("warbondCode")]
+    public string WarbondCode { get; init; } = "";
 
     [JsonIgnore]
     public ArmorPassive? PassiveInfo { get; init; }
+
+    [JsonIgnore]
+    public Warbond? WarbondInfo { get; init; }
 }

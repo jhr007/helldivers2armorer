@@ -1,5 +1,6 @@
 @page "/"
 @inject ArmorDataService Data
+@inject IJSRuntime JS
 
 <PageTitle>Helldivers 2 Armorer</PageTitle>
 
@@ -19,7 +20,7 @@ else
     <div class="filter-bar">
         <div class="filter-controls">
             <div class="search-wrap">
-                <input class="search-input" type="text" placeholder="Search armor, passive, tag, or description..."
+                <input class="search-input" type="text" placeholder="Search armor, passive, tag, or short description..."
                        @bind="searchText" @bind:event="oninput" />
                 @if (!string.IsNullOrEmpty(searchText))
                 {
@@ -59,6 +60,23 @@ else
                     }
                 }
             </select>
+
+            <div class="filter-spacer"></div>
+
+            <button class="filter-toggle @(showOwnedBadges ? "active" : "")"
+                    @onclick="ToggleOwnedBadges"
+                    title="@(showOwnedBadges ? "Hide owned/unowned icons on tiles" : "Show owned icons on tiles — click a badge to mark as owned")">
+                @(showOwnedBadges ? "Hide owned icons" : "Show owned icons")
+            </button>
+
+            @if (ownedArmors.Count > 0)
+            {
+                <button class="filter-toggle @(showOwnedOnly ? "active" : "")"
+                        @onclick="ToggleOwnedOnly"
+                        title="@(showOwnedOnly ? "Show all armors" : "Show only armors you have marked as owned")">
+                    @(showOwnedOnly ? "Show all" : "Show owned")
+                </button>
+            }
         </div>
 
         @if (activePassives.Count > 0 || activeFeatureTags.Count > 0)
@@ -89,8 +107,14 @@ else
         @if (selectedArmors.Count > 0)
         {
             <div class="selection-bar">
-                <span class="selection-count">@selectedArmors.Count selected</span>
-                <button class="clear-all" @onclick="ClearSelections">Clear selections</button>
+                <span class="selection-count">
+                    @selectedArmors.Count selected
+                    @if (selectedArmors.Count < 2)
+                    {
+                        <span class="selection-hint">— select one more to compare</span>
+                    }
+                </span>
+                <button class="clear-all" @onclick="ClearSelections">Clear</button>
             </div>
         }
     </div>
@@ -102,11 +126,50 @@ else
         filtered = filtered.Where(a =>
             a.DisplayName.Contains(s, StringComparison.OrdinalIgnoreCase) ||
             a.Passive.Contains(s, StringComparison.OrdinalIgnoreCase) ||
-            (a.PassiveInfo?.Description.Contains(s, StringComparison.OrdinalIgnoreCase) == true) ||
+            (a.PassiveInfo?.ShortDescription.Contains(s, StringComparison.OrdinalIgnoreCase) == true) ||
             (a.PassiveInfo?.AbilityTags.Any(t =>
                 t.Contains(s, StringComparison.OrdinalIgnoreCase) ||
                 FormatTag(t).Contains(s, StringComparison.OrdinalIgnoreCase)) == true)
         ).ToList();
+    }
+    if (showOwnedOnly)
+    {
+        filtered = filtered.Where(a => ownedArmors.Contains(a.InternalName)).ToList();
+    }
+
+    @if (selectedArmors.Count == 2)
+    {
+        var ca1 = Data.ArmorSets.First(a => a.InternalName == selectedArmors[0]);
+        var ca2 = Data.ArmorSets.First(a => a.InternalName == selectedArmors[1]);
+        <div class="comparison-panel">
+            <div class="comp-header">
+                <span class="comp-label">Comparison</span>
+                <button class="clear-all" @onclick="ClearSelections">Clear</button>
+            </div>
+            <div class="comp-row">
+                @foreach (var (ca, other) in new[] { (ca1, ca2), (ca2, ca1) })
+                {
+                    <div class="comp-armor">
+                        <img class="comp-img" src="images/armor/@ca.ImageURL" alt="@ca.DisplayName" />
+                        <div class="comp-details">
+                            <div class="comp-name">@ca.DisplayName</div>
+                            <div class="comp-passive">@ca.Passive</div>
+                            <div class="comp-stats">
+                                <span class="comp-stat @(ca.ArmorRating > other.ArmorRating ? "stat-high" : ca.ArmorRating < other.ArmorRating ? "stat-low" : "")">
+                                    <span class="stat-label">AR</span> @ca.ArmorRating
+                                </span>
+                                <span class="comp-stat @(ca.Speed > other.Speed ? "stat-high" : ca.Speed < other.Speed ? "stat-low" : "")">
+                                    <span class="stat-label">SPD</span> @ca.Speed
+                                </span>
+                                <span class="comp-stat @(ca.Stamina > other.Stamina ? "stat-high" : ca.Stamina < other.Stamina ? "stat-low" : "")">
+                                    <span class="stat-label">STA</span> @ca.Stamina
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     }
 
     @foreach (var weightClass in new[] { "Light", "Medium", "Heavy" })
@@ -114,18 +177,32 @@ else
         var group = filtered.Where(a => a.WeightClass == weightClass).OrderBy(a => a.SortOrder).ToList();
         if (group.Count > 0)
         {
+            var collapsed = collapsedWeights.Contains(weightClass);
             <section class="weight-section">
-                <h2 class="weight-heading @weightClass.ToLower()">@weightClass</h2>
-                <div class="armor-grid">
-                    @foreach (var armor in group)
-                    {
-                        <ArmorTile Armor="armor"
-                                   Selected="selectedArmors.Contains(armor.InternalName)"
-                                   OnClick="() => ToggleSelection(armor.InternalName)"
-                                   OnPassiveClick="SelectPassive"
-                                   OnTagClick="tag => activeFeatureTags.Add(tag)" />
-                    }
+                <div class="weight-heading-row" @onclick="() => ToggleCollapse(weightClass)"
+                     title="@(collapsed ? "Expand" : "Collapse") @weightClass section">
+                    <h2 class="weight-heading @weightClass.ToLower()">
+                        <i class="bi @(collapsed ? "bi-chevron-right" : "bi-chevron-down") weight-collapse-icon"></i>
+                        @weightClass
+                    </h2>
+                    <span class="weight-count">@group.Count</span>
                 </div>
+                @if (!collapsed)
+                {
+                    <div class="armor-grid">
+                        @foreach (var armor in group)
+                        {
+                            <ArmorTile Armor="armor"
+                                       Selected="selectedArmors.Contains(armor.InternalName)"
+                                       Owned="ownedArmors.Contains(armor.InternalName)"
+                                       ShowOwnedBadge="showOwnedBadges"
+                                       OnClick="() => ToggleSelection(armor.InternalName)"
+                                       OnPassiveClick="SelectPassive"
+                                       OnTagClick="tag => activeFeatureTags.Add(tag)"
+                                       OnOwnedToggle="ToggleOwned" />
+                        }
+                    </div>
+                }
             </section>
         }
     }
@@ -139,12 +216,62 @@ else
 @code {
     private HashSet<string> activePassives = [];
     private HashSet<string> activeFeatureTags = [];
-    private HashSet<string> selectedArmors = [];
+    private List<string> selectedArmors = [];
+    private HashSet<string> ownedArmors = [];
+    private HashSet<string> collapsedWeights = [];
     private string selectedFeature = "";
     private string searchText = "";
     private bool passiveDropdownOpen = false;
+    private bool showOwnedBadges = true;
+    private bool showOwnedOnly = false;
 
-    protected override async Task OnInitializedAsync() => await Data.LoadAsync();
+    private const string OwnedStorageKey       = "hd2armorer.owned";
+    private const string ShowBadgesStorageKey  = "hd2armorer.showOwnedBadges";
+    private const string ShowOwnedStorageKey   = "hd2armorer.showOwnedOnly";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Data.LoadAsync();
+
+        var storedOwned = await JS.InvokeAsync<string?>("localStorage.getItem", OwnedStorageKey);
+        if (!string.IsNullOrEmpty(storedOwned))
+        {
+            var list = System.Text.Json.JsonSerializer.Deserialize<List<string>>(storedOwned);
+            if (list is not null) ownedArmors = [.. list];
+        }
+
+        var storedBadges = await JS.InvokeAsync<string?>("localStorage.getItem", ShowBadgesStorageKey);
+        if (storedBadges is not null)
+            showOwnedBadges = storedBadges == "true";
+
+        var storedOnly = await JS.InvokeAsync<string?>("localStorage.getItem", ShowOwnedStorageKey);
+        if (storedOnly is not null)
+            showOwnedOnly = storedOnly == "true";
+    }
+
+    private async Task ToggleOwnedBadges()
+    {
+        showOwnedBadges = !showOwnedBadges;
+        await JS.InvokeVoidAsync("localStorage.setItem", ShowBadgesStorageKey, showOwnedBadges.ToString().ToLower());
+    }
+
+    private async Task ToggleOwnedOnly()
+    {
+        showOwnedOnly = !showOwnedOnly;
+        await JS.InvokeVoidAsync("localStorage.setItem", ShowOwnedStorageKey, showOwnedOnly.ToString().ToLower());
+    }
+
+    private async Task ToggleOwned(string internalName)
+    {
+        if (!ownedArmors.Remove(internalName)) ownedArmors.Add(internalName);
+        await JS.InvokeVoidAsync("localStorage.setItem", OwnedStorageKey,
+            System.Text.Json.JsonSerializer.Serialize(ownedArmors.ToList()));
+    }
+
+    private void ToggleCollapse(string weightClass)
+    {
+        if (!collapsedWeights.Remove(weightClass)) collapsedWeights.Add(weightClass);
+    }
 
     private void TogglePassiveDropdown() => passiveDropdownOpen = !passiveDropdownOpen;
 
@@ -162,8 +289,15 @@ else
 
     private void ToggleSelection(string internalName)
     {
-        if (!selectedArmors.Remove(internalName)) selectedArmors.Add(internalName);
+        if (selectedArmors.Contains(internalName))
+            selectedArmors.Remove(internalName);
+        else
+        {
+            if (selectedArmors.Count >= 2) selectedArmors.RemoveAt(0);
+            selectedArmors.Add(internalName);
+        }
     }
+
     private void ClearSelections() => selectedArmors.Clear();
     private void ClearSearch() => searchText = "";
     private void RemovePassive(string p) => activePassives.Remove(p);
