@@ -1,15 +1,17 @@
+@if (menuOpen)
+{
+    <div class="menu-overlay" @onclick="() => menuOpen = false"></div>
+}
 <div class="armor-tile @(Selected ? "selected" : "") @(menuOpen ? "menu-open" : "")" @onclick="HandleTileClick">
     <div class="armor-img-wrap">
-        @if (ShowOwnedBadge)
-        {
-            <button class="owned-badge-btn @(Owned ? "is-owned" : "is-unowned")"
-                    @onclick:stopPropagation="true"
-                    @onclick="() => OnOwnedToggle.InvokeAsync(Armor.InternalName)"
-                    title="@(Owned ? "Owned — click to unmark" : "Not owned — click to mark as owned")"
-                    aria-label="@(Owned ? "Unmark as owned" : "Mark as owned")">
-                <i class="bi @(Owned ? "bi-check-circle-fill" : "bi-circle")"></i>
-            </button>
-        }
+        <button class="owned-badge @(Owned ? "is-owned" : "is-unowned")"
+                disabled="@(!ShowOwnedBadge)"
+                @onclick:stopPropagation="true"
+                @onclick="() => OnOwnedToggle.InvokeAsync(Armor.InternalName)"
+                title="@(Owned ? "Owned" : "Not owned")"
+                aria-label="@(Owned ? "Owned" : "Not owned")">
+            <i class="bi @(Owned ? "bi-check-circle-fill" : "bi-circle")"></i>
+        </button>
         <img class="armor-img" src="images/armor/@Armor.ImageURL" alt="@Armor.DisplayName" loading="lazy" />
     </div>
     <div class="armor-info">
@@ -65,11 +67,11 @@
         {
             <div class="passive-desc-br">@((MarkupString)Armor.PassiveInfo!.ShortDescription.Replace("\n", "<br/>"))</div>
         }
-        @if (Armor.SortOrder >= 9000)
-        {
-            <a class="unsorted-banner" href="unsorted" @onclick:stopPropagation="true">Sort position unknown</a>
-        }
         <div class="tile-actions">
+            @if (Armor.SortOrder >= 9000)
+            {
+                <a class="unsorted-banner" href="unsorted" @onclick:stopPropagation="true">Sort position unknown</a>
+            }
             <button class="tile-info-btn" @onclick:stopPropagation="true" @onclick="() => detailOpen = true"
                     title="View full armor details" aria-label="View armor details">
                 <i class="bi bi-info-circle"></i>
@@ -90,7 +92,10 @@
                     <img src="images/armor/@Armor.ImageURL" alt="@Armor.DisplayName" class="detail-img" />
                 </div>
                 <div class="detail-content">
-                    <div class="detail-name">@Armor.DisplayName</div>
+                    <div class="detail-name">
+                        <span>@Armor.DisplayName</span>
+                        <ExternalLink Class="detail-wiki-link" Href="@WikiUrl">Helldivers Wiki</ExternalLink>
+                    </div>
                     <div class="detail-weight">@Armor.WeightClass Armor</div>
                     @if (Armor.PassiveInfo is { } pi)
                     {
@@ -125,7 +130,6 @@
                             }
                         </div>
                     }
-                    <ExternalLink Class="detail-wiki-link" Href="@WikiUrl">View @Armor.DisplayName on Helldivers Wiki</ExternalLink>
                 </div>
             </div>
         </div>

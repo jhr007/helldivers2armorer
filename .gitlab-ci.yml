@@ -35,7 +35,7 @@ version:
   stage: version
   interruptible: true
   image:
-    name: mcr.microsoft.com/dotnet/sdk:10.0
+    name: mcr.microsoft.com/dotnet/sdk:10.0.203
     pull_policy: if-not-present
   script:
     - dotnet tool restore
@@ -51,7 +51,7 @@ build:
   stage: build
   interruptible: true
   image:
-    name: mcr.microsoft.com/dotnet/sdk:10.0
+    name: mcr.microsoft.com/dotnet/sdk:10.0.203
     pull_policy: if-not-present
   needs:
     - job: version
@@ -109,7 +109,7 @@ tag-release:
   stage: release
   interruptible: false
   image:
-    name: alpine/git:latest
+    name: alpine/git:v2.52.0
     entrypoint: [""]
     pull_policy: if-not-present
   needs:
@@ -134,7 +134,7 @@ pages:
   stage: release
   interruptible: false
   image:
-    name: alpine/git:latest
+    name: alpine/git:v2.52.0
     entrypoint: [""]
     pull_policy: if-not-present
   needs:
@@ -162,9 +162,9 @@ pages:
 # ── Docker image for homelab ──────────────────────────────────────────────
 docker:
   stage: release
-  image: docker:latest
+  image: docker:29.4.1
   services:
-    - docker:dind
+    - docker:29.4.1-dind
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   before_script:
@@ -191,7 +191,7 @@ docker:
 # ?tag= tells Portainer to pull that specific tag — commit SHA guarantees a fresh pull.
 deploy:
   stage: deploy
-  image: curlimages/curl:latest
+  image: curlimages/curl:8.20.0
   script:
     - |
       if [ -z "$PORTAINER_WEBHOOK_URL" ]; then

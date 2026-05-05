@@ -427,7 +427,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
 /* ── Armor Grid ─────────────────────────────────────────────────────────── */
 .armor-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
 }
 
@@ -498,6 +498,13 @@ a:hover { color: #e8c060; text-decoration: underline; }
 }
 .tile-header .armor-name { flex: 1; min-width: 0; }
 
+/* ── Tile Menu Overlay (closes menu on outside click) ───────────────────── */
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+}
+
 /* ── Tile Menu ───────────────────────────────────────────────────────────── */
 .tile-menu-wrap {
     position: relative;
@@ -549,7 +556,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
 .tile-menu-item:hover { background: #1c1f25; color: var(--gold); text-decoration: none; }
 
 /* ── Owned Indicators ───────────────────────────────────────────────────── */
-.owned-badge-btn {
+.owned-badge {
     position: absolute;
     top: 0.3rem;
     left: 0.3rem;
@@ -557,7 +564,6 @@ a:hover { color: #e8c060; text-decoration: underline; }
     background: none;
     border: none;
     padding: 0;
-    cursor: pointer;
     line-height: 1;
     font-size: 1.1rem;
     width: 22px;
@@ -568,10 +574,11 @@ a:hover { color: #e8c060; text-decoration: underline; }
     border-radius: 50%;
     transition: transform 0.12s;
 }
-.owned-badge-btn:hover { transform: scale(1.18); }
-.owned-badge-btn.is-owned { color: #4aaa3a; }
-.owned-badge-btn.is-unowned { color: rgba(200, 200, 200, 0.35); }
-.owned-badge-btn.is-unowned:hover { color: rgba(200, 200, 200, 0.7); }
+.owned-badge:not(:disabled) { cursor: pointer; }
+.owned-badge:not(:disabled):hover { transform: scale(1.18); }
+.owned-badge.is-owned { color: #4aaa3a; }
+.owned-badge.is-unowned { color: rgba(200, 200, 200, 0.35); }
+.owned-badge:not(:disabled).is-unowned:hover { color: rgba(200, 200, 200, 0.7); }
 
 /* ── Selection / Comparison hint ────────────────────────────────────────── */
 .selection-hint {
@@ -585,11 +592,13 @@ a:hover { color: #e8c060; text-decoration: underline; }
 /* ── Tile Actions & Info Button ─────────────────────────────────────────── */
 .tile-actions {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 0.4rem;
     margin-top: auto;
     padding-top: 0.15rem;
 }
 .tile-info-btn {
+    margin-left: auto;
     background: none;
     border: none;
     color: var(--text-dim);
@@ -619,7 +628,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 6px;
-    max-width: 600px;
+    max-width: 780px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
@@ -644,24 +653,27 @@ a:hover { color: #e8c060; text-decoration: underline; }
 .detail-modal-close:hover { color: var(--text); }
 .detail-modal-body {
     display: flex;
-    gap: 1.25rem;
-    padding: 1.25rem;
+    gap: 1.5rem;
+    padding: 1.5rem;
 }
 .detail-img-wrap {
     flex-shrink: 0;
-    width: 140px;
+    width: 180px;
     background: #0d0e12;
     border-radius: 4px;
     overflow: hidden;
-    align-self: flex-start;
 }
 .detail-img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 .detail-content { flex: 1; min-width: 0; }
 .detail-name {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
     font-family: var(--font-head);
     font-size: 1.45rem;
     font-weight: 700;
@@ -705,7 +717,7 @@ a:hover { color: #e8c060; text-decoration: underline; }
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    margin-top: 0.5rem;
+    font-size: 0.85rem;
     color: var(--gold);
     text-decoration: none;
     font-family: var(--font-head);
@@ -912,9 +924,9 @@ a:hover { color: #e8c060; text-decoration: underline; }
 
 /* ── Unsorted tile banner ───────────────────────────────────────────────── */
 .unsorted-banner {
-    display: block;
-    margin-top: auto;
+    flex: 1;
     padding: 0.2rem 0.5rem;
+    text-align: center;
     font-size: 0.7rem;
     font-family: var(--font-head);
     letter-spacing: 0.06em;
@@ -924,7 +936,6 @@ a:hover { color: #e8c060; text-decoration: underline; }
     border: 1px solid rgba(200, 168, 32, 0.4);
     border-radius: 2px;
     text-decoration: none;
-    text-align: center;
 }
 .unsorted-banner:hover {
     background: rgba(200, 168, 32, 0.18);

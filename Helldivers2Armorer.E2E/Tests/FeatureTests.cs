@@ -135,37 +135,41 @@ public class FeatureTests(AppFixture app, BrowserFixture browser)
     // ── Owned badges ──────────────────────────────────────────────────────────
 
     [Fact]
-    public async Task OwnedBadges_Toggle_HidesAndRestoresBadgesOnTiles()
+    public async Task OwnedBadges_Toggle_DisablesAndEnablesBadgesOnTiles()
     {
-        // Badges are visible by default (showOwnedBadges defaults to true)
+        // Badges are always present in the DOM; toggle controls whether they are clickable
         var page = await LoadHomeAsync();
 
-        await page.WaitForSelectorAsync(".owned-badge-btn", new() { Timeout = 5_000 });
-        Assert.True(await page.Locator(".owned-badge-btn").CountAsync() > 0);
+        await page.WaitForSelectorAsync(".owned-badge", new() { Timeout = 5_000 });
+        Assert.True(await page.Locator(".owned-badge").CountAsync() > 0);
 
-        await page.Locator(".filter-toggle", new() { HasText = "Hide owned icons" }).ClickAsync();
+        // Disabling adds the HTML disabled attribute — badges remain visible but inert
+        await page.Locator(".filter-toggle", new() { HasText = "Disable owned icons" }).ClickAsync();
         await page.WaitForFunctionAsync(
-            "document.querySelectorAll('.owned-badge-btn').length === 0",
+            "document.querySelector('.owned-badge')?.disabled === true",
             null, new PageWaitForFunctionOptions { Timeout = 5_000 });
-        Assert.Equal(0, await page.Locator(".owned-badge-btn").CountAsync());
+        Assert.True(await page.Locator(".owned-badge:disabled").CountAsync() > 0);
 
-        await page.Locator(".filter-toggle", new() { HasText = "Show owned icons" }).ClickAsync();
-        await page.WaitForSelectorAsync(".owned-badge-btn", new() { Timeout = 5_000 });
-        Assert.True(await page.Locator(".owned-badge-btn").CountAsync() > 0);
+        // Re-enabling removes the disabled attribute
+        await page.Locator(".filter-toggle", new() { HasText = "Enable owned icons" }).ClickAsync();
+        await page.WaitForFunctionAsync(
+            "document.querySelector('.owned-badge')?.disabled === false",
+            null, new PageWaitForFunctionOptions { Timeout = 5_000 });
+        Assert.Equal(0, await page.Locator(".owned-badge:disabled").CountAsync());
     }
 
     [Fact]
     public async Task OwnedBadge_Click_TogglesOwnedState()
     {
-        // Badges visible by default — no need to click "Show owned icons" first
+        // Badges enabled by default — clicking an unowned badge marks it owned
         var page = await LoadHomeAsync();
 
-        await page.WaitForSelectorAsync(".owned-badge-btn");
+        await page.WaitForSelectorAsync(".owned-badge");
 
-        var badge = page.Locator(".owned-badge-btn.is-unowned").First;
+        var badge = page.Locator(".owned-badge.is-unowned").First;
         await badge.ClickAsync();
 
-        await page.WaitForSelectorAsync(".owned-badge-btn.is-owned", new() { Timeout = 5_000 });
-        Assert.True(await page.Locator(".owned-badge-btn.is-owned").CountAsync() > 0);
+        await page.WaitForSelectorAsync(".owned-badge.is-owned", new() { Timeout = 5_000 });
+        Assert.True(await page.Locator(".owned-badge.is-owned").CountAsync() > 0);
     }
 }

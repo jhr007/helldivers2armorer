@@ -65,8 +65,8 @@ else
 
             <button class="filter-toggle @(showOwnedBadges ? "active" : "")"
                     @onclick="ToggleOwnedBadges"
-                    title="@(showOwnedBadges ? "Hide owned/unowned icons on tiles" : "Show owned icons on tiles — click a badge to mark as owned")">
-                @(showOwnedBadges ? "Hide owned icons" : "Show owned icons")
+                    title="@(showOwnedBadges ? "Disable owned icons on tiles" : "Enable owned icons on tiles")">
+                @(showOwnedBadges ? "Disable owned icons" : "Enable owned icons")
             </button>
 
             @if (ownedArmors.Count > 0)
