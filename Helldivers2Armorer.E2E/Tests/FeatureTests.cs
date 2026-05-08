@@ -74,35 +74,33 @@ public class FeatureTests(AppFixture app, BrowserFixture browser)
         Assert.Equal(lightTilesBefore, await page.Locator(".weight-section:has(.weight-heading.light) .armor-tile").CountAsync());
     }
 
-    // ── Comparison panel ──────────────────────────────────────────────────────
+    // ── Selected armor bar ────────────────────────────────────────────────────
 
     [Fact]
-    public async Task Comparison_SelectTwoArmors_ShowsComparisonPanel()
+    public async Task Comparison_SelectArmor_ShowsSelectedArmorBar()
     {
         var page = await LoadHomeAsync();
 
-        var tiles = page.Locator(".armor-tile");
-        await tiles.First.Locator(".armor-name").ClickAsync();
-        await tiles.Nth(1).Locator(".armor-name").ClickAsync();
+        await page.Locator(".armor-tile").First.Locator(".armor-name").ClickAsync();
 
-        await page.WaitForSelectorAsync(".comparison-panel", new() { Timeout = 5_000 });
-        Assert.Equal(1, await page.Locator(".comparison-panel").CountAsync());
+        await page.WaitForSelectorAsync(".selected-armor-bar", new() { Timeout = 5_000 });
+        Assert.Equal(1, await page.Locator(".selected-armor-bar").CountAsync());
     }
 
     [Fact]
-    public async Task Comparison_ClearButton_DismissesPanel()
+    public async Task Comparison_ClearButton_DismissesSelectedArmorBar()
     {
         var page = await LoadHomeAsync();
 
         var tiles = page.Locator(".armor-tile");
         await tiles.First.Locator(".armor-name").ClickAsync();
         await tiles.Nth(1).Locator(".armor-name").ClickAsync();
-        await page.WaitForSelectorAsync(".comparison-panel");
+        await page.WaitForSelectorAsync(".selected-armor-bar");
 
-        await page.Locator(".comparison-panel .clear-all").ClickAsync();
-        await page.WaitForSelectorAsync(".comparison-panel", new() { State = WaitForSelectorState.Detached, Timeout = 5_000 });
+        await page.Locator(".selected-armor-bar .clear-all").ClickAsync();
+        await page.WaitForSelectorAsync(".selected-armor-bar", new() { State = WaitForSelectorState.Detached, Timeout = 5_000 });
 
-        Assert.Equal(0, await page.Locator(".comparison-panel").CountAsync());
+        Assert.Equal(0, await page.Locator(".selected-armor-bar").CountAsync());
     }
 
     // ── Tile info modal ───────────────────────────────────────────────────────

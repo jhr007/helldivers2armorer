@@ -104,19 +104,7 @@ else
             </div>
         }
 
-        @if (selectedArmors.Count > 0)
-        {
-            <div class="selection-bar">
-                <span class="selection-count">
-                    @selectedArmors.Count selected
-                    @if (selectedArmors.Count < 2)
-                    {
-                        <span class="selection-hint">— select one more to compare</span>
-                    }
-                </span>
-                <button class="clear-all" @onclick="ClearSelections">Clear</button>
-            </div>
-        }
+        <SelectedArmorList @ref="armorList" AllArmors="Data.ArmorSets" OnSelectionChanged="StateHasChanged" />
     </div>
 
     var filtered = Data.Filter(activePassives, activeFeatureTags);
@@ -135,41 +123,6 @@ else
     if (showOwnedOnly)
     {
         filtered = filtered.Where(a => ownedArmors.Contains(a.InternalName)).ToList();
-    }
-
-    @if (selectedArmors.Count == 2)
-    {
-        var ca1 = Data.ArmorSets.First(a => a.InternalName == selectedArmors[0]);
-        var ca2 = Data.ArmorSets.First(a => a.InternalName == selectedArmors[1]);
-        <div class="comparison-panel">
-            <div class="comp-header">
-                <span class="comp-label">Comparison</span>
-                <button class="clear-all" @onclick="ClearSelections">Clear</button>
-            </div>
-            <div class="comp-row">
-                @foreach (var (ca, other) in new[] { (ca1, ca2), (ca2, ca1) })
-                {
-                    <div class="comp-armor">
-                        <img class="comp-img" src="images/armor/@ca.ImageURL" alt="@ca.DisplayName" />
-                        <div class="comp-details">
-                            <div class="comp-name">@ca.DisplayName</div>
-                            <div class="comp-passive">@ca.Passive</div>
-                            <div class="comp-stats">
-                                <span class="comp-stat @(ca.ArmorRating > other.ArmorRating ? "stat-high" : ca.ArmorRating < other.ArmorRating ? "stat-low" : "")">
-                                    <span class="stat-label">AR</span> @ca.ArmorRating
-                                </span>
-                                <span class="comp-stat @(ca.Speed > other.Speed ? "stat-high" : ca.Speed < other.Speed ? "stat-low" : "")">
-                                    <span class="stat-label">SPD</span> @ca.Speed
-                                </span>
-                                <span class="comp-stat @(ca.Stamina > other.Stamina ? "stat-high" : ca.Stamina < other.Stamina ? "stat-low" : "")">
-                                    <span class="stat-label">STA</span> @ca.Stamina
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
     }
 
     @foreach (var weightClass in new[] { "Light", "Medium", "Heavy" })
@@ -193,10 +146,10 @@ else
                         @foreach (var armor in group)
                         {
                             <ArmorTile Armor="armor"
-                                       Selected="selectedArmors.Contains(armor.InternalName)"
+                                       Selected="(armorList?.IsSelected(armor.InternalName) ?? false)"
                                        Owned="ownedArmors.Contains(armor.InternalName)"
                                        ShowOwnedBadge="showOwnedBadges"
-                                       OnClick="() => ToggleSelection(armor.InternalName)"
+                                       OnClick="() => armorList!.ToggleSelection(armor.InternalName)"
                                        OnPassiveClick="SelectPassive"
                                        OnTagClick="tag => activeFeatureTags.Add(tag)"
                                        OnOwnedToggle="ToggleOwned" />
@@ -216,9 +169,9 @@ else
 @code {
     private HashSet<string> activePassives = [];
     private HashSet<string> activeFeatureTags = [];
-    private List<string> selectedArmors = [];
     private HashSet<string> ownedArmors = [];
     private HashSet<string> collapsedWeights = [];
+    private SelectedArmorList? armorList;
     private string selectedFeature = "";
     private string searchText = "";
     private bool passiveDropdownOpen = false;
@@ -287,18 +240,6 @@ else
         selectedFeature = "";
     }
 
-    private void ToggleSelection(string internalName)
-    {
-        if (selectedArmors.Contains(internalName))
-            selectedArmors.Remove(internalName);
-        else
-        {
-            if (selectedArmors.Count >= 2) selectedArmors.RemoveAt(0);
-            selectedArmors.Add(internalName);
-        }
-    }
-
-    private void ClearSelections() => selectedArmors.Clear();
     private void ClearSearch() => searchText = "";
     private void RemovePassive(string p) => activePassives.Remove(p);
     private void RemoveFeatureTag(string t) => activeFeatureTags.Remove(t);

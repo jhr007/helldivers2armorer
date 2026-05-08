@@ -1,0 +1,236 @@
+@inject NotificationService NotificationService
+
+@if (_selected.Count > 0)
+{
+    <div class="selected-armor-bar">
+        <div class="selected-armor-scroll">
+            @foreach (var id in _selected)
+            {
+                var armor = AllArmors.FirstOrDefault(a => a.InternalName == id);
+                if (armor is not null)
+                {
+                    <ArmorCompareTile Armor="armor" OnRemove="() => RemoveArmor(id)" />
+                }
+            }
+        </div>
+        <div class="selected-armor-actions">
+            <button class="clear-all" @onclick="ClearAll">Clear</button>
+            <button class="compare-btn" @onclick="() => compareOpen = true">
+                <i class="bi bi-bar-chart-line-fill"></i> Compare
+            </button>
+        </div>
+    </div>
+}
+
+@if (compareOpen)
+{
+    <div class="compare-modal-backdrop" @onclick="() => compareOpen = false">
+        <div class="compare-modal" @onclick:stopPropagation="true">
+            <div class="compare-modal-header">
+                <span class="compare-modal-title">Armor Comparison</span>
+                <button class="compare-modal-close" @onclick="() => compareOpen = false" aria-label="Close">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="compare-table-wrap">
+                @{
+                    var armors = _selected
+                        .Select(id => AllArmors.FirstOrDefault(a => a.InternalName == id))
+                        .Where(a => a is not null).Select(a => a!).ToList();
+                    bool multi = armors.Count > 1;
+                    int maxAR  = multi ? armors.Max(a => a.ArmorRating) : 0;
+                    int minAR  = multi ? armors.Min(a => a.ArmorRating) : 0;
+                    int maxSpd = multi ? armors.Max(a => a.Speed)       : 0;
+                    int minSpd = multi ? armors.Min(a => a.Speed)       : 0;
+                    int maxSta = multi ? armors.Max(a => a.Stamina)     : 0;
+                    int minSta = multi ? armors.Min(a => a.Stamina)     : 0;
+                }
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th class="compare-col-label compare-label-img-cell"></th>
+                            @foreach (var a in armors)
+                            {
+                                var armorId = a.InternalName;
+                                <th class="compare-col-header">
+                                    <div class="compare-col-img-wrap">
+                                        <img src="images/armor/@a.ImageURL" alt="@a.DisplayName" />
+                                        <button class="compare-col-remove" @onclick="() => RemoveFromModal(armorId)"
+                                                aria-label="Remove @a.DisplayName">×</button>
+                                    </div>
+                                    <div class="col-name">@a.DisplayName</div>
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="compare-col-label">Weight</td>
+                            @foreach (var a in armors)
+                            {
+                                <td class="compare-text-cell">@a.WeightClass</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="compare-col-label">Passive</td>
+                            @foreach (var a in armors)
+                            {
+                                <td class="compare-passive-cell">@a.Passive</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="compare-col-label">AR</td>
+                            @foreach (var a in armors)
+                            {
+                                var cls = multi ? (a.ArmorRating == maxAR ? "stat-high" : a.ArmorRating == minAR ? "stat-low" : "") : "";
+                                <td class="compare-stat-cell @cls">@a.ArmorRating</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="compare-col-label">Speed</td>
+                            @foreach (var a in armors)
+                            {
+                                var cls = multi ? (a.Speed == maxSpd ? "stat-high" : a.Speed == minSpd ? "stat-low" : "") : "";
+                                <td class="compare-stat-cell @cls">@a.Speed</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="compare-col-label">Stamina</td>
+                            @foreach (var a in armors)
+                            {
+                                var cls = multi ? (a.Stamina == maxSta ? "stat-high" : a.Stamina == minSta ? "stat-low" : "") : "";
+                                <td class="compare-stat-cell @cls">@a.Stamina</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="compare-col-label">Description</td>
+                            @foreach (var a in armors)
+                            {
+                                <td class="compare-desc-cell">
+                                    @if (!string.IsNullOrEmpty(a.PassiveInfo?.Description))
+                                    {
+                                        @((MarkupString)a.PassiveInfo!.Description.Replace("\n", "<br/>"))
+                                    }
+                                    else
+                                    {
+                                        <span class="compare-empty">—</span>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="compare-col-label">Tags</td>
+                            @foreach (var a in armors)
+                            {
+                                <td class="compare-tags-cell">
+                                    @if (a.PassiveInfo?.AbilityTags is { Count: > 0 } tags)
+                                    {
+                                        @foreach (var tag in tags)
+                                        {
+                                            <span class="feature-tag">@FormatTag(tag)</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="compare-empty">—</span>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="compare-col-label">Warbond</td>
+                            @foreach (var a in armors)
+                            {
+                                <td class="compare-text-cell">
+                                    @if (a.WarbondInfo is { } wb)
+                                    {
+                                        @if (!string.IsNullOrEmpty(wb.WikiUrl))
+                                        {
+                                            <ExternalLink Href="@wb.WikiUrl">@wb.DisplayName</ExternalLink>
+                                        }
+                                        else
+                                        {
+                                            @wb.DisplayName
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="compare-empty">—</span>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="compare-col-label">Wiki</td>
+                            @foreach (var a in armors)
+                            {
+                                <td class="compare-text-cell">
+                                    <ExternalLink Href="@WikiUrl(a)">Helldivers Wiki</ExternalLink>
+                                </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired] public List<ArmorSet> AllArmors { get; set; } = [];
+    [Parameter] public EventCallback OnSelectionChanged { get; set; }
+
+    private readonly List<string> _selected = [];
+    private bool compareOpen = false;
+
+    public bool IsSelected(string internalName) => _selected.Contains(internalName);
+
+    public async Task ToggleSelection(string internalName)
+    {
+        if (_selected.Contains(internalName))
+        {
+            _selected.Remove(internalName);
+        }
+        else if (_selected.Count >= 10)
+        {
+            NotificationService.Notify(new NotificationMessage
+            {
+                Severity  = NotificationSeverity.Warning,
+                Summary   = "Max 10 selected",
+                Detail    = "Remove an armor before adding another.",
+                Duration  = 3000
+            });
+            return;
+        }
+        else
+        {
+            _selected.Add(internalName);
+        }
+        await OnSelectionChanged.InvokeAsync();
+    }
+
+    private async Task RemoveArmor(string internalName)
+    {
+        _selected.Remove(internalName);
+        await OnSelectionChanged.InvokeAsync();
+    }
+
+    private async Task RemoveFromModal(string internalName)
+    {
+        _selected.Remove(internalName);
+        if (_selected.Count == 0) compareOpen = false;
+        await OnSelectionChanged.InvokeAsync();
+    }
+
+    private async Task ClearAll()
+    {
+        _selected.Clear();
+        await OnSelectionChanged.InvokeAsync();
+    }
+
+    private static string WikiUrl(ArmorSet a) =>
+        "https://helldivers.wiki.gg/wiki/" + a.DisplayName.Replace(' ', '_');
+
+    private static string FormatTag(string tag) =>
+        string.Join(" ", tag.Split('-').Select(w => char.ToUpper(w[0]) + w[1..]));
+}

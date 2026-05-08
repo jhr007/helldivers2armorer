@@ -1,0 +1,11 @@
+<div class="armor-compare-tile">
+    <button class="compare-tile-remove" @onclick="() => OnRemove.InvokeAsync()"
+            @onclick:stopPropagation="true" aria-label="Remove">×</button>
+    <img class="compare-tile-img" src="images/armor/@Armor.ImageURL" alt="@Armor.DisplayName" />
+    <div class="compare-tile-name" title="@Armor.DisplayName">@Armor.DisplayName</div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ArmorSet Armor { get; set; } = default!;
+    [Parameter] public EventCallback OnRemove { get; set; }
+}
