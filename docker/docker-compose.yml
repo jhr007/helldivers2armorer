@@ -17,7 +17,6 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=backend
-      - traefik.http.routers.hd2armorer.tls=true
       - traefik.http.routers.hd2armorer.rule=Host(`hd2armorer.lan`)
       - traefik.http.routers.hd2armorer.service=hd2armorer_svc
       - traefik.http.services.hd2armorer_svc.loadbalancer.server.port=80

@@ -186,29 +186,37 @@ docker:
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
 
-# ── Deploy via Portainer webhook ──────────────────────────────────────────
-# PORTAINER_WEBHOOK_URL stored in GitLab CI/CD variables (Settings → CI/CD → Variables)
-# ?tag= tells Portainer to pull that specific tag — commit SHA guarantees a fresh pull.
+# ── Deploy via Komodo webhook ─────────────────────────────────────────────────
+# Komodo resolves the stack by name, so the URL is derived from KOMODO_STACK; the only
+# secret is the shared KOMODO_WEBHOOK_SECRET (GitLab CI/CD variable). Komodo pulls :latest
+# and recreates the stack. Matches the .komodo_deploy template in the infrastructure repo.
 deploy:
   stage: deploy
   image: curlimages/curl:8.20.0
+  variables:
+    KOMODO_URL: https://komodo.lan
+    KOMODO_STACK: hd2armorer
   script:
     - |
-      if [ -z "$PORTAINER_WEBHOOK_URL" ]; then
-        echo "PORTAINER_WEBHOOK_URL not set — skipping."
-        exit 0
-      fi
-      echo "Triggering Portainer redeploy with tag $CI_COMMIT_SHA..."
-      HTTP_CODE=$(curl --insecure --silent --max-time 30 \
-        --write-out "%{http_code}" --output /tmp/portainer_response.txt \
-        -X POST "${PORTAINER_WEBHOOK_URL}?tag=${CI_COMMIT_SHA}")
-      echo "HTTP status: $HTTP_CODE"
-      echo "Response: $(cat /tmp/portainer_response.txt)"
-      if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
-        echo "Portainer returned HTTP $HTTP_CODE"
+      if [ -z "$KOMODO_WEBHOOK_SECRET" ]; then
+        echo "ERROR: KOMODO_WEBHOOK_SECRET not set - add it to CI/CD variables."
         exit 1
       fi
-      echo "Portainer notified."
+      WEBHOOK_URL="${KOMODO_URL}/listener/gitlab/stack/${KOMODO_STACK}/deploy"
+      echo "Triggering Komodo redeploy for ${KOMODO_STACK}..."
+      HTTP_CODE=$(curl -4 --insecure --silent --max-time 30 \
+        -H "X-Gitlab-Token: ${KOMODO_WEBHOOK_SECRET}" \
+        -H "Content-Type: application/json" \
+        -d "{\"ref\": \"refs/heads/${CI_COMMIT_BRANCH}\"}" \
+        --write-out "%{http_code}" --output /tmp/komodo_response.txt \
+        "${WEBHOOK_URL}")
+      echo "HTTP status: $HTTP_CODE"
+      echo "Response: $(cat /tmp/komodo_response.txt)"
+      if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+        echo "Komodo returned HTTP $HTTP_CODE"
+        exit 1
+      fi
+      echo "Komodo notified."
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
   needs:
