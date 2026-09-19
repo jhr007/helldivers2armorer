@@ -5,7 +5,7 @@ networks:
 
 services:
   helldivers2armorer:
-    image: registry.gitlab.lan:5050/jhr/helldivers2armorer:latest
+    image: registry.gitlab.lan/jhr/helldivers2armorer:latest
     pull_policy: always
     restart: unless-stopped
     stdin_open: true
